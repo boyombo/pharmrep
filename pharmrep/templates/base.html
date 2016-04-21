@@ -47,10 +47,10 @@
                 <ul class="nav navbar-nav navbar-right set-links">
                   {% block navigation %}
                   <li><a id="home-menu" href="{% url 'home' %}" class="active-menu-item">HOME</a></li>
-                  <li><a id="batch-menu" href="{% url 'home' %}">SALE</a></li>
-                  <li><a id="exam-menu" href="{% url 'home' %}">COLLECTION</a></li>
-                  <li><a id="exam-menu" href="{% url 'home' %}">CALL</a></li>
-                  <li><a id="exam-menu" href="{% url 'home' %}">SUMMARY</a></li>
+                  <li><a id="batch-menu" href="{% url 'product_sale' %}">SALE</a></li>
+                  <li><a id="payment-menu" href="{% url 'product_payment' %}">COLLECTION</a></li>
+                  <li><a id="call-menu" href="{% url 'home' %}">CALL</a></li>
+                  <li><a id="summary-menu" href="{% url 'home' %}">SUMMARY</a></li>
                      <li><a id="contact-menu" href="">MGT</a></li>
                   {% endblock navigation %}
                 </ul>
