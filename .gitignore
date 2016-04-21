@@ -17,7 +17,6 @@ media/
 *~
 */*~
 .DS_Store
-fabfile.py
 
 # C extensions
 *.so
