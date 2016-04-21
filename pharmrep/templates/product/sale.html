@@ -1,0 +1,87 @@
+{% extends "plain.html" %}
+
+    {% block pageheader %}
+            <h3 >Upload Batch <i class="fa fa-angle-double-right "></i></h3>
+    {% endblock pageheader %}
+
+    {% block middle %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <form method='post' enctype='multipart/form-data' action=''>{% csrf_token %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% for fld in form %}
+                      <div class="form-group">
+                          {% if fld.errors %}
+                            <div class="alert alert-danger">
+                                {{ fld.errors }}
+                            </div>
+                          {% endif %}
+                          <label for="{{ fld.id_for_label }}" class="control-label">{{ fld.label }}</label>
+                          {{ fld }}
+                      </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        {% if form.customer.errors %}
+                        <div class="alert alert-danger">
+                        {{ form.customer.errors }}
+                        </div>
+                        {% endif %}
+                        <label for="{{ form.customer.id_for_label }}" class="control-label">Customer</label>
+                        {{ form.customer }}
+                    </div>
+                    <div class="form-group">
+                        {% if form.category.errors %}
+                        <div class="alert alert-danger">
+                        {{ form.category.errors }}
+                        </div>
+                        {% endif %}
+                        <label for="{{ form.category.id_for_label }}" class="control-label">Category</label>
+                        {{ form.category }}
+                    </div>
+                    <div class="form-group">
+                        {% if form.duration.errors %}
+                        <div class="alert alert-danger">
+                        {{ form.duration.errors }}
+                        </div>
+                        {% endif %}
+                        <label for="{{ form.duration.id_for_label }}" class="control-label">Duration (mins)</label>
+                        {{ form.duration }}
+                    </div>
+                    <div class="form-group">
+                        {% if form.question_file.errors %}
+                        <div class="alert alert-danger">
+                        {{ form.question_file.errors }}
+                        </div>
+                        {% endif %}
+                        <label for="{{ form.question_file.id_for_label }}">Questions</label>
+                        {{ form.question_file }}
+                    </div>
+                        <br />
+                        <input type="submit" value="Upload Questions" class="btn btn-primary btn-lg" />
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    {% endblock middle %}
+
+    {% block extra-js %}
+    <script type="text/javascript">
+        $('#id_rep').attr('class','form-control');
+        $('#id_customer').attr('class','form-control');
+        $('#id_product').attr('class','form-control');
+        $('#id_quantity').attr('class','form-control');
+
+        // Set active menu to batch
+        $('.active-menu-item').removeAttr('class','active-menu-item');
+        $('#batch-menu').attr('class','active-menu-item');
+    </script>
+    {% endblock extra-js %}

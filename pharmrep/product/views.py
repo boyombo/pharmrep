@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+from product.forms import SaleForm
+
+
+def sale(request):
+    form = SaleForm()
+    return render(request, 'product/sale.html', {'form': form})

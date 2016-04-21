@@ -41,15 +41,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#" ><strong style=""></strong> M<i class="fa fa-globe"></i>cQ <small >Exam Study</small></a>
+                <a class="navbar-brand" href="#" ><strong style=""></strong> Alpha <i class="fa fa-globe"></i> <small >Reports</small></a>
             </div>
             <div class="navbar-collapse collapse move-me">
                 <ul class="nav navbar-nav navbar-right set-links">
                   {% block navigation %}
                   <li><a id="home-menu" href="{% url 'home' %}" class="active-menu-item">HOME</a></li>
-                  <li><a id="batch-menu" href="{% url 'home' %}">BATCH</a></li>
-                  <li><a id="exam-menu" href="{% url 'home' %}">TAKE EXAM</a></li>
-                     <li><a id="contact-menu" href="">CONTACT</a></li>
+                  <li><a id="batch-menu" href="{% url 'home' %}">SALE</a></li>
+                  <li><a id="exam-menu" href="{% url 'home' %}">COLLECTION</a></li>
+                  <li><a id="exam-menu" href="{% url 'home' %}">CALL</a></li>
+                  <li><a id="exam-menu" href="{% url 'home' %}">SUMMARY</a></li>
+                     <li><a id="contact-menu" href="">MGT</a></li>
                   {% endblock navigation %}
                 </ul>
             </div>
@@ -60,9 +62,9 @@
     {% block start %}
     <section id="home-sec">
         <div class="overlay text-center">
-            <h1>MULTIPLE CHOICE EXAM DUMP</h1>
+            <h1>Alpha Reps Reports</h1>
             <hr class="hr-set"/>
-            <p>Easily load multiple-choice questions and consume in different formats</p>
+            <p>Easily report on Sales activities</p>
         </div>
     </section>
     {% endblock start %}
@@ -261,8 +263,8 @@
     <section id="footer-sec" >
         <div class="container">
             <div class="row">
-<div class="col-md-4">
-   <h4>ABOUT COMPANY</h4>
+<div class="col-md-12">
+   <h4>INSTRUCTIONS</h4>
     <p style="padding-right:50px;">
         Nunc at viverra risus. 
         In euismod quam ac dictum varius.
@@ -274,32 +276,6 @@
          Nunc at viverra risus. <a href="about.html">more..</a>
     </p>
 </div>
-                <div class="col-md-4">
-       <h4>PHYSICAL LOCATION </h4>
-                    <h5>345/DC, New York State,</h5>
-                     <h5>The Lane Tower Road,</h5>
-                    <h5>United States-201-900-590.</h5>
-                    <br />
-                    <h5><strong>Email:</strong> info@domain.com</h5>
-                      <h5><strong>Call:</strong> +1-908-78-55-5555</h5>
-                   
-</div>
-                <div class="col-md-4">
-      <h4>SOCIAL LINKS</h4>
-                    <div class="social-links">
-
-                    
-                    <a href="#" > <i class="fa fa-facebook fa-2x" ></i></a>
-                         <a href="#" > <i class="fa fa-twitter fa-2x" ></i></a>
-                         <a href="#" > <i class="fa fa-linkedin fa-2x" ></i></a>
-                         <a href="#" > <i class="fa fa-google-plus fa-2x" ></i></a>
-                         <a href="#" > <i class="fa fa-github fa-2x" ></i></a>
-                         <a href="#" > <i class="fa fa-digg fa-2x" ></i></a>
-                         <a href="#" > <i class="fa fa-dropbox fa-2x" ></i></a>
-                   </div>
-
-</div>
-               
             </div>
                
         </div>
