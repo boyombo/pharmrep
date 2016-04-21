@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block middle %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="overlay text-center">
+                <h3><a href="{% url 'home' %}" class="btn btn-primary btn-large btn-block">Start Here</a></h3>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% endblock middle %}
+
+{% block extra-js %}
+<script type='text/javascript">
+$('.active-menu-item').removeAtrr('class', 'active-menu-item');
+$('#home-menu').attr('class', 'active-menu-item');
+</script>
+{% endblock extra-js %}
