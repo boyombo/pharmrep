@@ -15,9 +15,9 @@ def push():
 
 def deploy():
     local("git push")
-    remote_dir = '/home/bayo/webapps/roundtable/yarep/'
+    remote_dir = '/home/bayo/webapps/pharmrep/pharmrep/'
     with cd(remote_dir):
         run("git pull -u")
-        run("python2.7 manage.py syncdb --migrate")
+        run("python2.7 manage.py migrate")
         run("python2.7 manage.py collectstatic --noinput")
         run("../apache2/bin/restart")
