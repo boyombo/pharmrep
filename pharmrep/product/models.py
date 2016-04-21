@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from datetime import datetime
 
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Product(models.Model):
@@ -14,6 +15,7 @@ class Product(models.Model):
 
 class Rep(models.Model):
     name = models.CharField(max_length=200)
+    user = models.ForeignKey(User)
 
     def __unicode__(self):
         return self.name
