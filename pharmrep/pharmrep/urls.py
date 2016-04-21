@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth import views
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -22,6 +23,17 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'product/', include('product.urls')),
 
+]
+
+urlpatterns += [
+    url(r'accounts/login/$',
+        views.login,
+        {'template_name': 'core/login.html'},
+        name='login'),
+    url(r'accounts/logout/$',
+        views.logout,
+        {'next_page': '/accounts/login/'},
+        name='logout'),
 ]
 
 admin.site.site_header = 'Pharmacy Reps admin'
