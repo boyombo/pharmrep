@@ -41,7 +41,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#" ><strong style=""></strong> Alpha <i class="fa fa-globe"></i> <small >Reports</small></a>
+                <a class="navbar-brand" href="/" ><strong style=""></strong> Alpha <i class="fa fa-globe"></i> <small >Reports</small></a>
             </div>
             <div class="navbar-collapse collapse move-me">
                 <ul class="nav navbar-nav navbar-right set-links">
@@ -301,6 +301,9 @@
     <script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
     <!-- CUSTOM SCRIPTS  -->
     <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+    <script type="text/javascript">
+    $('.alert-error').attr('class', 'alert-danger');
+    </script>
     {% endblock js %}
     {% block extra-js %}{% endblock extra-js %}
     {% endblock body %}

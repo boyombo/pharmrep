@@ -6,7 +6,7 @@ from product.models import Sale, Payment
 class SaleForm(forms.ModelForm):
     class Meta:
         model = Sale
-        exclude = ['recorded_date', 'rep']
+        exclude = ['recorded_date', 'rep', 'amount']
 
 
 class PaymentForm(forms.ModelForm):

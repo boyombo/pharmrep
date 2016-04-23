@@ -35,6 +35,7 @@ class Sale(models.Model):
     customer = models.ForeignKey(Customer, related_name='customer_sales')
     product = models.ForeignKey(Product, related_name='product_sales')
     quantity = models.PositiveIntegerField()
+    amount = models.IntegerField()
     sales_date = models.DateField()
     recorded_date = models.DateTimeField(default=datetime.now)
 
