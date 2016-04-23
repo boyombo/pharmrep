@@ -21,7 +21,8 @@ def sale(request):
             obj.rep = rep
             obj.amount = obj.quantity * obj.product.rate
             obj.save()
-            return redirect('sales_list')
+            messages.success(request, 'Successfully added sale')
+            #return redirect('sales_list')
     else:
         form = SaleForm()
     return render(request, 'product/sale.html', {'form': form})
@@ -30,7 +31,7 @@ def sale(request):
 @login_required
 def sales_list(request):
     rep = get_object_or_404(Rep, user=request.user)
-    sales = Sale.objects.filter(rep=rep)
+    sales = Sale.objects.filter(rep=rep).order_by('-sales_date')
     return render(request, 'product/sales_list.html', {'sales': sales})
 
 
@@ -55,7 +56,8 @@ def payment(request):
                 Sum('amount'))['amount__sum'] or 0
             obj.balance = total_sales - total_payment - amt
             obj.save()
-            return redirect('payment_list')
+            messages.success(request, 'Successfully added collection')
+            #return redirect('payment_list')
     else:
         form = PaymentForm()
     return render(request, 'product/payment.html', {'form': form})
