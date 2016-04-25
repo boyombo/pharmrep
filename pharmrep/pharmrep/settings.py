@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'product.apps.ProductConfig',
-    'call.apps.CallConfig',
+    'activity.apps.ActivityConfig',
 ]
 
 MIDDLEWARE_CLASSES = [

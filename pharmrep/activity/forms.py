@@ -1,6 +1,6 @@
 from django import forms
 
-from call.models import Call
+from activity.models import Call
 from product.models import Rep
 
 

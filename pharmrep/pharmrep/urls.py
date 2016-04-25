@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
     url(r'product/', include('product.urls')),
-    url(r'call/', include('call.urls')),
+    url(r'activity/', include('activity.urls')),
 ]
 
 urlpatterns += [

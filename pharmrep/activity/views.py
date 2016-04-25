@@ -5,9 +5,9 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView
 
 
-from call.forms import GovtCallForm, PrivateCallForm, TradeCallForm
+from activity.forms import GovtCallForm, PrivateCallForm, TradeCallForm
 from product.models import Rep
-from call.models import Call
+from activity.models import Call
 
 
 @method_decorator(login_required, name='dispatch')
@@ -23,7 +23,7 @@ class CallView(CreateView):
         return kwargs
 
     def get_success_url(self):
-        return '/call/call/'
+        return '/activity/activity/'
 
     def form_valid(self, form):
         messages.success(self.request, 'Successfully added call')
@@ -31,27 +31,27 @@ class CallView(CreateView):
 
 
 class GovtCallView(CallView):
-    template_name = 'call/govt.html'
+    template_name = 'activity/govt.html'
     form_class = GovtCallForm
 
     def get_success_url(self):
-        return 'call/govt/'
+        return '/activity/govt/'
 
 
 class PrivateCallView(CallView):
-    template_name = 'call/private.html'
+    template_name = 'activity/private.html'
     form_class = PrivateCallForm
 
     def get_success_url(self):
-        return 'call/private/'
+        return '/activity/private/'
 
 
 class TradeCallView(CallView):
-    template_name = 'call/trade.html'
+    template_name = 'activity/trade.html'
     form_class = TradeCallForm
 
     def get_success_url(self):
-        return 'call/trade/'
+        return '/activity/trade/'
 
 
 @login_required

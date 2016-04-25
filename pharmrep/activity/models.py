@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from datetime import datetime
+from datetime import datetime, date
 
 from django.db import models
 from product.models import Customer, Rep
@@ -25,3 +25,12 @@ class Call(models.Model):
 
     def __unicode__(self):
         return self.contact
+
+
+class Competition(models.Model):
+    rep = models.ForeignKey(Rep)
+    activity = models.TextField()
+    recorded_date = models.DateField(default=date.today)
+
+    def __unicode__(self):
+        return unicode(self.rep)
