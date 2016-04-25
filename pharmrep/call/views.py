@@ -1,30 +1,57 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.contrib import messages
+from django.views.generic.edit import CreateView
 
 
-from call.forms import CallForm
+from call.forms import GovtCallForm, PrivateCallForm, TradeCallForm
 from product.models import Rep
 from call.models import Call
 
 
-@login_required
-def call(request):
-    try:
-        rep = Rep.objects.get(user=request.user)
-    except Rep.DoesNotExist:
-        messages.error(request, 'You need to be a rep to register calls')
-        return redirect('/accounts/login/')
-    if request.method == 'POST':
-        form = CallForm(request.POST)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.rep = rep
-            obj.save()
-            messages.success(request, 'Successfully added call')
-    else:
-        form = CallForm()
-    return render(request, 'call/call.html', {'form': form})
+@method_decorator(login_required, name='dispatch')
+class CallView(CreateView):
+    model = Call
+    #form_class = CallForm
+    #template_name = 'call/call.html'
+    #success_url = '/call/call/'
+
+    def get_form_kwargs(self):
+        kwargs = super(CallView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+    def get_success_url(self):
+        return '/call/call/'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Successfully added call')
+        return super(CallView, self).form_valid(form)
+
+
+class GovtCallView(CallView):
+    template_name = 'call/govt.html'
+    form_class = GovtCallForm
+
+    def get_success_url(self):
+        return 'call/govt/'
+
+
+class PrivateCallView(CallView):
+    template_name = 'call/private.html'
+    form_class = PrivateCallForm
+
+    def get_success_url(self):
+        return 'call/private/'
+
+
+class TradeCallView(CallView):
+    template_name = 'call/trade.html'
+    form_class = TradeCallForm
+
+    def get_success_url(self):
+        return 'call/trade/'
 
 
 @login_required

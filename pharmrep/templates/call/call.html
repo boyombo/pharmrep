@@ -13,7 +13,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <a href="{% url 'call_list' %}">view calls</a>
+                <ul class="list-group">
+                    {% block call_nav %}
+                <a id="govtcall" class="list-group-item" href="{% url 'govt_call' %}">Govt Hospital call</a>
+                <a class="list-group-item" href="{% url 'private_call' %}">Private Hospital call</a>
+                <a class="list-group-item" href="{% url 'trade_call' %}">Trade call</a>
+                <a class="list-group-item" href="{% url 'call_list' %}">view calls</a>
+                {% endblock call_nav %}
+            </ul>
             </div>
             <div class="col-md-6">
                 <form method='post' role='form' class='form-horizontal' action=''>{% csrf_token %}

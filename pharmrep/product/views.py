@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models.aggregates import Sum
 from django.contrib import messages
+#from django.views.generic.edit import CreateView
 
 from product.forms import SaleForm, PaymentForm
 from product.models import Rep, Sale, Payment
@@ -9,22 +10,18 @@ from product.models import Rep, Sale, Payment
 
 @login_required
 def sale(request):
-    try:
-        rep = Rep.objects.get(user=request.user)
-    except Rep.DoesNotExist:
-        messages.error(request, 'You need to be a rep to make sales')
-        return redirect('/accounts/login/')
     if request.method == 'POST':
-        form = SaleForm(request.POST)
+        form = SaleForm(request.user, request.POST)
+        #import pdb;pdb.set_trace()
         if form.is_valid():
+            rep = Rep.objects.get(user=request.user)
             obj = form.save(commit=False)
             obj.rep = rep
             obj.amount = obj.quantity * obj.product.rate
             obj.save()
             messages.success(request, 'Successfully added sale')
-            #return redirect('sales_list')
     else:
-        form = SaleForm()
+        form = SaleForm(request.user)
     return render(request, 'product/sale.html', {'form': form})
 
 
