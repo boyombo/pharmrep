@@ -58,4 +58,4 @@ class TradeCallView(CallView):
 def call_list(request):
     rep = get_object_or_404(Rep, user=request.user)
     calls = Call.objects.filter(rep=rep).order_by('-call_date')
-    return render(request, 'call/calls_list.html', {'calls': calls})
+    return render(request, 'activity/calls_list.html', {'calls': calls})
