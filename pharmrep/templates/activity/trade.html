@@ -3,9 +3,9 @@
 <h3 >Trade Call<i class="fa fa-angle-double-right "></i></h3>
 {% endblock pageheader %}
 
-{% block call_nav %}
- <a class="list-group-item" href="{% url 'govt_call' %}">Govt Hospital call</a>
- <a class="list-group-item" href="{% url 'private_call' %}">Private Hospital call</a>
- <a class="list-group-item active" href="#">Trade call</a>
- <a class="list-group-item" href="{% url 'call_list' %}">view calls</a>
-{% endblock call_nav %}
+{% block submenu-js %}
+<script type="text/javascript">
+$('.list-group-item').removeClass('active');
+$('#trade-submenu').addClass('active');
+</script>
+{% endblock submenu-js %}

@@ -1,11 +1,13 @@
 {% extends 'activity/call.html' %}
 {% block pageheader %}
-<h3 >Government Hospital Call<i class="fa fa-angle-double-right "></i></h3>
+<h3 >Competitor Activities<i class="fa fa-angle-double-right "></i></h3>
 {% endblock pageheader %}
 
 {% block submenu-js %}
 <script type="text/javascript">
 $('.list-group-item').removeClass('active');
-$('#govt-submenu').addClass('active');
+$('#competitor-submenu').addClass('active');
+        // Datepicker
+        $('#id_recorded_date').datepicker({'format': 'yyyy-mm-dd'});
 </script>
 {% endblock submenu-js %}

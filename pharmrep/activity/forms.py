@@ -1,26 +1,39 @@
 from django import forms
 
-from activity.models import Call
+from activity.models import Call, Competition
 from product.models import Rep
 
 
-class CallForm(forms.ModelForm):
-
-    class Meta:
-        model = Call
-        exclude = ['rep', 'recorded_date', 'call_type']
-
+class BaseActivityForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        #import pdb;pdb.set_trace()
         self.user = kwargs.pop('user')
-        super(CallForm, self).__init__(*args, **kwargs)
+        super(BaseActivityForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         try:
             self.rep = Rep.objects.get(user=self.user)
         except Rep.DoesNotExist:
             raise forms.ValidationError(
-                'Only reps are allowed to make calls')
+                'Only reps are allowed to perform this activity')
+
+
+class CallForm(BaseActivityForm):
+
+    class Meta:
+        model = Call
+        exclude = ['rep', 'recorded_date', 'call_type']
+
+    #def __init__(self, *args, **kwargs):
+    #    #import pdb;pdb.set_trace()
+    #    self.user = kwargs.pop('user')
+    #    super(CallForm, self).__init__(*args, **kwargs)
+
+    #def clean(self):
+    #    try:
+    #        self.rep = Rep.objects.get(user=self.user)
+    #    except Rep.DoesNotExist:
+    #        raise forms.ValidationError(
+    #            'Only reps are allowed to make calls')
 
     def get_call_type(self):
         raise NotImplementedError
@@ -45,3 +58,9 @@ class PrivateCallForm(CallForm):
 class TradeCallForm(CallForm):
     def get_call_type(self):
         return Call.TRADE
+
+
+class CompetitionForm(BaseActivityForm):
+    class Meta:
+        model = Competition
+        fields = ['activity', 'recorded_date']

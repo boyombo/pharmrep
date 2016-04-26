@@ -12,16 +12,21 @@
     {% block middle %}
     <div class="container">
         <div class="row">
+                {% block leftpane %}
             <div class="col-md-3">
                 <ul class="list-group">
-                    {% block call_nav %}
-                <a id="govtcall" class="list-group-item" href="{% url 'govt_call' %}">Govt Hospital call</a>
-                <a class="list-group-item" href="{% url 'private_call' %}">Private Hospital call</a>
-                <a class="list-group-item" href="{% url 'trade_call' %}">Trade call</a>
-                <a class="list-group-item" href="{% url 'call_list' %}">view calls</a>
-                {% endblock call_nav %}
+{% block call_nav %}
+ <a id="govt-submenu" class="list-group-item" href="{% url 'govt_call' %}">Govt Hospital call</a>
+ <a id="private-submenu" class="list-group-item" href="{% url 'private_call' %}">Private Hospital call</a>
+ <a id="trade-submenu" class="list-group-item" href="{% url 'trade_call' %}">Trade call</a>
+ <a id="calllist-submenu" class="list-group-item" href="{% url 'call_list' %}">view calls</a>
+ <a id="competitor-submenu" class="list-group-item" href="{% url 'competition' %}">Competitor Activity</a>
+ <a id="competitorlist-submenu" class="list-group-item" href="{% url 'competition_list' %}">Competitor Activity list</a>
+{% endblock call_nav %}
             </ul>
             </div>
+            {% endblock leftpane %}
+                {% block content %}
             <div class="col-md-6">
                 <form method='post' role='form' class='form-horizontal' action=''>{% csrf_token %}
                     {% if form.non_field_errors %}
@@ -51,7 +56,9 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-3"></div>
+                {% endblock content %}
+            <div class="col-md-3">
+            </div>
         </div>
     </div>
     {% endblock middle %}
@@ -75,4 +82,5 @@
         $('#id_call_date').datepicker({'format': 'yyyy-mm-dd'});
     </script>
 
+    {% block submenu-js %}{% endblock submenu-js %}
     {% endblock extra-js %}

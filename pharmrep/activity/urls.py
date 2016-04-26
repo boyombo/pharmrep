@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'private/$', views.PrivateCallView.as_view(), name='private_call'),
     url(r'trade/$', views.TradeCallView.as_view(), name='trade_call'),
     url(r'call_list/$', views.call_list, name='call_list'),
+    url(r'competition/$', views.CompetitionView.as_view(), name='competition'),
+    url(r'competitionlist/$', views.competition_list, name='competition_list'),
 ]
