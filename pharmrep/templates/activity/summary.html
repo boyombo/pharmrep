@@ -1,0 +1,19 @@
+
+{% extends 'activity/call.html' %}
+{% block pageheader %}
+<h3 >Summary<i class="fa fa-angle-double-right "></i></h3>
+{% endblock pageheader %}
+
+{% block submenu-js %}
+<script type="text/javascript">
+$('.list-group-item').removeClass('active');
+$('#summary-submenu').addClass('active');
+
+$('#id_report').attr('class','form-control');
+$('#id_start_date').attr('class','form-control');
+$('#id_end_date').attr('class','form-control');
+
+$('#id_start_date').datepicker({'format': 'yyyy-mm-dd'});
+$('#id_end_date').datepicker({'format': 'yyyy-mm-dd'});
+</script>
+{% endblock submenu-js %}

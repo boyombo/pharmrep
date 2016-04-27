@@ -2,7 +2,8 @@ from __future__ import unicode_literals
 from datetime import datetime, date
 
 from django.db import models
-from product.models import Customer, Rep
+from django.db.models.aggregates import Sum
+from product.models import Customer, Rep, Sale, Payment
 
 
 class Call(models.Model):
@@ -63,3 +64,43 @@ class Conclusion(models.Model):
 
     def __unicode__(self):
         return self.text
+
+
+class Itinerary(models.Model):
+    rep = models.ForeignKey(Rep)
+    recorded_date = models.DateField(default=date.today)
+    places = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Itinerary'
+
+    def __unicode__(self):
+        return self.places
+
+
+class Summary(models.Model):
+    rep = models.ForeignKey(Rep)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    outstanding = models.IntegerField(default=0)
+    report = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Summaries'
+
+    def __unicode__(self):
+        return unicode(self.rep)
+
+    @property
+    def sales(self):
+        return Sale.objects.filter(
+            rep=self.rep,
+            sales_date__range=(self.start_date, self.end_date)).aggregate(
+            Sum('amount'))['amount__sum'] or 0
+
+    @property
+    def collections(self):
+        return Payment.objects.filter(
+            rep=self.rep,
+            payment_date__range=(self.start_date, self.end_date)).aggregate(
+            Sum('amount'))['amount__sum'] or 0

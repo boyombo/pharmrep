@@ -27,3 +27,15 @@ class ContactAdmin(admin.ModelAdmin):
 class MarketAdmin(admin.ModelAdmin):
     list_display = ['rep', 'text', 'recorded_date']
     search_fields = ['rep__name']
+
+
+@admin.register(activity.Itinerary)
+class ItineraryAdmin(admin.ModelAdmin):
+    list_display = ['rep', 'places', 'recorded_date']
+    search_fields = ['rep__name']
+
+
+@admin.register(activity.Summary)
+class SummaryAdmin(admin.ModelAdmin):
+    list_display = ['rep', 'start_date', 'end_date', 'outstanding', 'report']
+    search_fields = ['rep__name']

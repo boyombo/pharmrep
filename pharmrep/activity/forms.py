@@ -1,6 +1,6 @@
 from django import forms
 
-from activity.models import Call, Competition, Contact, MarketNeed, Conclusion
+from activity import models as activity_models
 from product.models import Rep
 
 
@@ -20,7 +20,7 @@ class BaseActivityForm(forms.ModelForm):
 class CallForm(BaseActivityForm):
 
     class Meta:
-        model = Call
+        model = activity_models.Call
         exclude = ['rep', 'recorded_date', 'call_type']
 
     #def __init__(self, *args, **kwargs):
@@ -47,38 +47,50 @@ class CallForm(BaseActivityForm):
 
 class GovtCallForm(CallForm):
     def get_call_type(self):
-        return Call.GOVT
+        return activity_models.Call.GOVT
 
 
 class PrivateCallForm(CallForm):
     def get_call_type(self):
-        return Call.PRIVATE
+        return activity_models.Call.PRIVATE
 
 
 class TradeCallForm(CallForm):
     def get_call_type(self):
-        return Call.TRADE
+        return activity_models.Call.TRADE
 
 
 class CompetitionForm(BaseActivityForm):
     class Meta:
-        model = Competition
+        model = activity_models.Competition
         fields = ['activity', 'recorded_date']
 
 
 class ContactForm(BaseActivityForm):
     class Meta:
-        model = Contact
+        model = activity_models.Contact
         fields = ['name', 'phone', 'address']
 
 
 class MarketForm(BaseActivityForm):
     class Meta:
-        model = MarketNeed
+        model = activity_models.MarketNeed
         fields = ['text', 'recorded_date']
 
 
 class ConclusionForm(BaseActivityForm):
     class Meta:
-        model = Conclusion
+        model = activity_models.Conclusion
         fields = ['text', 'recorded_date']
+
+
+class ItineraryForm(BaseActivityForm):
+    class Meta:
+        model = activity_models.Itinerary
+        fields = ['recorded_date', 'places']
+
+
+class SummaryForm(BaseActivityForm):
+    class Meta:
+        model = activity_models.Summary
+        fields = ['start_date', 'end_date', 'report']

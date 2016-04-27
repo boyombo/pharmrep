@@ -3,11 +3,29 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+from django.db.models.aggregates import Sum
 
 from activity import forms as activity_forms
 
-from product.models import Rep
-from activity.models import Call, Competition, Contact, MarketNeed, Conclusion
+from product.models import Rep, Sale, Payment
+#from activity.models import Call, Competition, Contact, MarketNeed, Conclusion
+from activity import models as activity_models
+
+
+@method_decorator(login_required, name='dispatch')
+class BaseActivityListView(ListView):
+    model = None
+    order_by = ''
+
+    def get_queryset(self):
+        try:
+            rep = Rep.objects.get(user=self.request.user)
+        except Rep.DoesNotExist:
+            qset = self.model.objects.order_by(self.order_by)
+        else:
+            qset = self.model.objects.filter(rep=rep).order_by(self.order_by)
+        return qset
 
 
 @method_decorator(login_required, name='dispatch')
@@ -34,7 +52,7 @@ class BaseActivityCreateView(CreateView):
 
 @method_decorator(login_required, name='dispatch')
 class CallView(BaseActivityCreateView):
-    model = Call
+    model = activity_models.Call
     success_msg = 'Successfully added call'
     success_url = '/activity/govt/'
 
@@ -64,7 +82,8 @@ class TradeCallView(CallView):
 @login_required
 def call_list(request):
     rep = get_object_or_404(Rep, user=request.user)
-    calls = Call.objects.filter(rep=rep).order_by('-call_date')
+    calls = activity_models.Call.objects.filter(
+        rep=rep).order_by('-call_date')
     return render(request, 'activity/calls_list.html', {'calls': calls})
 
 
@@ -78,8 +97,8 @@ class CompetitionView(BaseActivityCreateView):
 @login_required
 def competition_list(request):
     rep = get_object_or_404(Rep, user=request.user)
-    activities = Competition.objects.filter(rep=rep).order_by(
-        '-recorded_date')
+    activities = activity_models.Competition.objects.filter(
+        rep=rep).order_by('-recorded_date')
     return render(request, 'activity/competition_list.html',
                   {'acts': activities})
 
@@ -94,7 +113,8 @@ class ContactView(BaseActivityCreateView):
 @login_required
 def contact_list(request):
     rep = get_object_or_404(Rep, user=request.user)
-    contacts = Contact.objects.filter(rep=rep).order_by('-added_date')
+    contacts = activity_models.Contact.objects.filter(
+        rep=rep).order_by('-added_date')
     return render(request, 'activity/contact_list.html',
                   {'contacts': contacts})
 
@@ -109,7 +129,8 @@ class MarketView(BaseActivityCreateView):
 @login_required
 def market_list(request):
     rep = get_object_or_404(Rep, user=request.user)
-    needs = MarketNeed.objects.filter(rep=rep).order_by('-recorded_date')
+    needs = activity_models.MarketNeed.objects.filter(
+        rep=rep).order_by('-recorded_date')
     return render(request, 'activity/market_list.html', {'needs': needs})
 
 
@@ -123,6 +144,44 @@ class ConclusionView(BaseActivityCreateView):
 @login_required
 def conclusion_list(request):
     rep = get_object_or_404(Rep, user=request.user)
-    conclusions = Conclusion.objects.filter(rep=rep).order_by('-recorded_date')
+    conclusions = activity_models.Conclusion.objects.filter(
+        rep=rep).order_by('-recorded_date')
     return render(request, 'activity/conclusion_list.html',
                   {'conclusions': conclusions})
+
+
+class ItineraryView(BaseActivityCreateView):
+    template_name = 'activity/itinerary.html'
+    form_class = activity_forms.ItineraryForm
+    success_url = '/activity/itinerary/'
+    success_msg = 'Successfully added itinerary'
+
+
+class ItineraryListView(BaseActivityListView):
+    model = activity_models.Itinerary
+    order_by = '-recorded_date'
+
+
+class SummaryView(BaseActivityCreateView):
+    template_name = 'activity/summary.html'
+    form_class = activity_forms.SummaryForm
+    success_url = '/activity/summary/'
+    success_msg = 'Successfully added summary'
+
+    def form_valid(self, form):
+        rep = Rep.objects.get(user=self.request.user)
+        obj = form.save(commit=False)
+        obj.rep = rep
+        total_sales = Sale.objects.filter(rep=rep).aggregate(
+            Sum('amount'))['amount__sum'] or 0
+        total_payment = Payment.objects.filter(rep=rep).aggregate(
+            Sum('amount'))['amount__sum'] or 0
+        obj.outstanding = total_sales - total_payment
+        obj.save()
+        messages.success(self.request, self.success_msg)
+        return super(BaseActivityCreateView, self).form_valid(form)
+
+
+class SummaryListView(BaseActivityListView):
+    model = activity_models.Summary
+    order_by = '-start_date'

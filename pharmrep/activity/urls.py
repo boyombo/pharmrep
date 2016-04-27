@@ -18,4 +18,10 @@ urlpatterns = [
     url(r'marketlist/$', views.market_list, name='market_list'),
     url(r'conclusion/$', views.ConclusionView.as_view(), name='conclusion'),
     url(r'conclusionlist/$', views.conclusion_list, name='conclusion_list'),
+    url(r'itinerary/$', views.ItineraryView.as_view(), name='itinerary'),
+    url(r'itinerarylist/$', views.ItineraryListView.as_view(),
+        name='itinerary_list'),
+    url(r'summary/$', views.SummaryView.as_view(), name='summary'),
+    url(r'summarylist/$', views.SummaryListView.as_view(),
+        name='summary_list'),
 ]

@@ -1,0 +1,15 @@
+{% extends 'activity/call.html' %}
+{% block pageheader %}
+<h3 >Itinerary<i class="fa fa-angle-double-right "></i></h3>
+{% endblock pageheader %}
+
+{% block submenu-js %}
+<script type="text/javascript">
+$('.list-group-item').removeClass('active');
+$('#itinerary-submenu').addClass('active');
+
+$('#id_places').attr('class','form-control');
+$('#id_recorded_date').attr('class','form-control');
+$('#id_recorded_date').datepicker({'format': 'yyyy-mm-dd'});
+</script>
+{% endblock submenu-js %}
