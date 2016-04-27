@@ -1,0 +1,15 @@
+{% extends 'activity/call.html' %}
+{% block pageheader %}
+<h3 >Add Contact<i class="fa fa-angle-double-right "></i></h3>
+{% endblock pageheader %}
+
+{% block submenu-js %}
+<script type="text/javascript">
+$('.list-group-item').removeClass('active');
+$('#contact-submenu').addClass('active');
+
+$('#id_name').attr('class','form-control');
+$('#id_phone').attr('class','form-control');
+$('#id_address').attr('class','form-control');
+</script>
+{% endblock submenu-js %}

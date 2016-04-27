@@ -1,6 +1,6 @@
 from django import forms
 
-from activity.models import Call, Competition
+from activity.models import Call, Competition, Contact, MarketNeed, Conclusion
 from product.models import Rep
 
 
@@ -64,3 +64,21 @@ class CompetitionForm(BaseActivityForm):
     class Meta:
         model = Competition
         fields = ['activity', 'recorded_date']
+
+
+class ContactForm(BaseActivityForm):
+    class Meta:
+        model = Contact
+        fields = ['name', 'phone', 'address']
+
+
+class MarketForm(BaseActivityForm):
+    class Meta:
+        model = MarketNeed
+        fields = ['text', 'recorded_date']
+
+
+class ConclusionForm(BaseActivityForm):
+    class Meta:
+        model = Conclusion
+        fields = ['text', 'recorded_date']

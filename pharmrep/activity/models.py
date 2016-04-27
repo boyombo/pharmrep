@@ -34,3 +34,32 @@ class Competition(models.Model):
 
     def __unicode__(self):
         return unicode(self.rep)
+
+
+class Contact(models.Model):
+    rep = models.ForeignKey(Rep)
+    name = models.CharField(max_length=250)
+    phone = models.CharField(max_length=50, blank=True)
+    address = models.TextField(blank=True)
+    added_date = models.DateField(default=datetime.now)
+
+    def __unicode__(self):
+        return self.name
+
+
+class MarketNeed(models.Model):
+    rep = models.ForeignKey(Rep)
+    text = models.TextField(blank=True)
+    recorded_date = models.DateField(default=date.today)
+
+    def __unicode__(self):
+        return self.text
+
+
+class Conclusion(models.Model):
+    rep = models.ForeignKey(Rep)
+    text = models.TextField(blank=True)
+    recorded_date = models.DateField(default=date.today)
+
+    def __unicode__(self):
+        return self.text

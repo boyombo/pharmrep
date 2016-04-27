@@ -16,13 +16,21 @@
             <div class="col-md-3">
                 <ul class="list-group">
 {% block call_nav %}
- <a id="govt-submenu" class="list-group-item" href="{% url 'govt_call' %}">Govt Hospital call</a>
- <a id="private-submenu" class="list-group-item" href="{% url 'private_call' %}">Private Hospital call</a>
- <a id="trade-submenu" class="list-group-item" href="{% url 'trade_call' %}">Trade call</a>
- <a id="calllist-submenu" class="list-group-item" href="{% url 'call_list' %}">view calls</a>
+ <a id="govt-submenu" class="list-group-item" href="{% url 'govt_call' %}">Govt Hospital Call</a>
+ <a id="private-submenu" class="list-group-item" href="{% url 'private_call' %}">Private Hospital Call</a>
+ <a id="trade-submenu" class="list-group-item" href="{% url 'trade_call' %}">Trade Call</a>
  <a id="competitor-submenu" class="list-group-item" href="{% url 'competition' %}">Competitor Activity</a>
- <a id="competitorlist-submenu" class="list-group-item" href="{% url 'competition_list' %}">Competitor Activity list</a>
+ <a id="contact-submenu" class="list-group-item" href="{% url 'contact' %}">Contact</a>
+ <a id="market-submenu" class="list-group-item" href="{% url 'market' %}">Market Need</a>
+ <a id="conclusion-submenu" class="list-group-item" href="{% url 'conclusion' %}">Conclusion</a>
 {% endblock call_nav %}
+            </ul>
+                <ul class="list-group">
+ <a id="calllist-submenu" class="list-group-item" href="{% url 'call_list' %}">Calls List</a>
+ <a id="competitorlist-submenu" class="list-group-item" href="{% url 'competition_list' %}">Competitor Activity List</a>
+ <a id="contactlist-submenu" class="list-group-item" href="{% url 'contact_list' %}">Contact List</a>
+ <a id="marketlist-submenu" class="list-group-item" href="{% url 'market_list' %}">Market List</a>
+ <a id="conclusionlist-submenu" class="list-group-item" href="{% url 'conclusion_list' %}">Conclusion List</a>
             </ul>
             </div>
             {% endblock leftpane %}
@@ -57,8 +65,10 @@
                 </form>
             </div>
                 {% endblock content %}
+                {% block rightpane %}
             <div class="col-md-3">
             </div>
+                {% endblock rightpane %}
         </div>
     </div>
     {% endblock middle %}

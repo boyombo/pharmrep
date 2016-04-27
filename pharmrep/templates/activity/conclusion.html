@@ -1,0 +1,16 @@
+{% extends 'activity/call.html' %}
+{% block pageheader %}
+<h3 >Add Conclusion<i class="fa fa-angle-double-right "></i></h3>
+{% endblock pageheader %}
+
+{% block submenu-js %}
+<script type="text/javascript">
+$('.list-group-item').removeClass('active');
+$('#conclusion-submenu').addClass('active');
+
+$('#id_text').attr('class','form-control');
+$('#id_recorded_date').attr('class','form-control');
+// Datepicker
+$('#id_recorded_date').datepicker({'format': 'yyyy-mm-dd'});
+</script>
+{% endblock submenu-js %}

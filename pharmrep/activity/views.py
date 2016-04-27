@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView
 from activity import forms as activity_forms
 
 from product.models import Rep
-from activity.models import Call, Competition
+from activity.models import Call, Competition, Contact, MarketNeed, Conclusion
 
 
 @method_decorator(login_required, name='dispatch')
@@ -82,3 +82,47 @@ def competition_list(request):
         '-recorded_date')
     return render(request, 'activity/competition_list.html',
                   {'acts': activities})
+
+
+class ContactView(BaseActivityCreateView):
+    template_name = 'activity/contact.html'
+    form_class = activity_forms.ContactForm
+    success_url = '/activity/contact/'
+    success_msg = 'Successfully added contact'
+
+
+@login_required
+def contact_list(request):
+    rep = get_object_or_404(Rep, user=request.user)
+    contacts = Contact.objects.filter(rep=rep).order_by('-added_date')
+    return render(request, 'activity/contact_list.html',
+                  {'contacts': contacts})
+
+
+class MarketView(BaseActivityCreateView):
+    template_name = 'activity/market.html'
+    form_class = activity_forms.MarketForm
+    success_url = '/activity/market/'
+    success_msg = 'Successfully added market need'
+
+
+@login_required
+def market_list(request):
+    rep = get_object_or_404(Rep, user=request.user)
+    needs = MarketNeed.objects.filter(rep=rep).order_by('-recorded_date')
+    return render(request, 'activity/market_list.html', {'needs': needs})
+
+
+class ConclusionView(BaseActivityCreateView):
+    template_name = 'activity/conclusion.html'
+    form_class = activity_forms.ConclusionForm
+    success_url = '/activity/conclusion/'
+    success_msg = 'Successfully added conclusion'
+
+
+@login_required
+def conclusion_list(request):
+    rep = get_object_or_404(Rep, user=request.user)
+    conclusions = Conclusion.objects.filter(rep=rep).order_by('-recorded_date')
+    return render(request, 'activity/conclusion_list.html',
+                  {'conclusions': conclusions})

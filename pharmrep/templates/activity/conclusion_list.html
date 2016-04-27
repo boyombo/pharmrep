@@ -11,7 +11,7 @@
         {% endif %}
         <div class="overlay ">
             {% block pageheader %}
-            <h3 >CALLS LIST <i class="fa fa-angle-double-right "></i></h3>
+            <h3>CONCLUSION LIST <i class="fa fa-angle-double-right "></i></h3>
             {% endblock pageheader %}
 
         </div>
@@ -19,31 +19,19 @@
 {% endblock start %}
 
         {% block content %}
-        <div class="col-md-6">
+        <div class="col-md-8">
             <table class="table table-striped table-responsive">
                 <thead>
                     <tr>
-                        <th>Customer</th>
-                        <th>Call Type</th>
-                        <th>Contact</th>
-                        <th>Position</th>
-                        <th>Address</th>
-                        <th>Products</th>
-                        <th>Value</th>
+                        <th>Text</th>
                         <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for call in calls %}
+                {% for conclusion in conclusions %}
                   <tr>
-                      <td>{{ call.customer }}</td>
-                      <td>{{ call.get_call_type_display }}</td>
-                      <td>{{ call.contact }}</td>
-                      <td>{{ call.position }}</td>
-                      <td>{{ call.address }}</td>
-                      <td>{{ call.products_detailed }}</td>
-                      <td>{{ call.order_value }}</td>
-                      <td>{{ call.call_date }}</td>
+                      <td>{{ conclusion.text }}</td>
+                      <td>{{ conclusion.recorded_date }}</td>
                 {% endfor %}
                 </tbody>
             </table>
@@ -52,6 +40,6 @@
 {% block submenu-js %}
 <script type="text/javascript">
 $('.list-group-item').removeClass('active');
-$('#calllist-submenu').addClass('active');
+$('#conclusionlist-submenu').addClass('active');
 </script>
 {% endblock submenu-js %}
