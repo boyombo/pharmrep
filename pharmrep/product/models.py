@@ -51,6 +51,7 @@ class Payment(models.Model):
     payment_date = models.DateField()
     recorded_date = models.DateTimeField(default=datetime.now)
     balance = models.IntegerField()
+    remarks = models.TextField(blank=True)
 
     def __unicode__(self):
         return unicode(self.customer)
