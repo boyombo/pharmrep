@@ -139,3 +139,9 @@ MEDIA_UR = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/'
+
+try:
+    from local_settings import MORE_APPS
+    INSTALLED_APPS += MORE_APPS
+except ImportError:
+    pass

@@ -5,14 +5,16 @@ from product.models import Customer, Product, Payment
 
 
 def balance(request):
-    customers = Customer.objects.annotate(
-        Sum('customer_sales__amount'), Sum('customer_payments__amount'))
-    clist = []
-    for customer in customers:
-        sale = customer.customer_sales__amount__sum or 0
-        payment = customer.customer_payments__amount__sum or 0
-        clist.append({'name': customer.name, 'balance': sale - payment})
-    return render(request, 'reports/balance.html', {'customers': clist})
+    return render(request, 'reports/balance.html',
+                  {'customers': Customer.objects.all()})
+    #customers = Customer.objects.annotate(
+    #    Sum('customer_sales__amount'), Sum('customer_payments__amount'))
+    #clist = []
+    #for customer in customers:
+    #    sale = customer.customer_sales__amount__sum or 0
+    #    payment = customer.customer_payments__amount__sum or 0
+    #    clist.append({'name': 'name', 'balance': sale - payment})
+    #return render(request, 'reports/balance.html', {'customers': clist})
 
 
 def performance(request):

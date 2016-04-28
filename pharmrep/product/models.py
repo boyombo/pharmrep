@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.aggregates import Sum
 
 
 class Product(models.Model):
@@ -28,6 +29,14 @@ class Customer(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    @property
+    def balance(self):
+        sales = self.customer_sales.aggregate(
+            Sum('amount'))['amount__sum'] or 0
+        paymt = self.customer_payments.aggregate(
+            Sum('amount'))['amount__sum'] or 0
+        return sales - paymt
 
 
 class Sale(models.Model):
