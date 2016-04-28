@@ -1,0 +1,94 @@
+{% extends "plain.html" %}
+{% load static from staticfiles %}
+
+    {% block pageheader %}
+    <h3 >Reports<i class="fa fa-angle-double-right "></i></h3>
+    {% endblock pageheader %}
+
+{% block extra-css %}
+<link href="{% static 'css/datepicker.css' %}" rel="stylesheet" type="text/css" />
+{% endblock extra-css %}
+
+    {% block middle %}
+    <div class="container">
+        <div class="row">
+                {% block leftpane %}
+            <div class="col-md-3">
+                <ul class="list-group">
+{% block call_nav %}
+ <a id="balance-submenu" class="list-group-item" href="{% url 'report_balance' %}">Outstanding Balance</a>
+ <a id="performance-submenu" class="list-group-item" href="{% url 'report_performance' %}">Product Performance</a>
+ <a id="collection-submenu" class="list-group-item" href="{% url 'report_collection' %}">Collection Analysis</a>
+{% endblock call_nav %}
+            </ul>
+                <ul class="list-group">
+ <a id="calllist-submenu" class="list-group-item" href="{% url 'call_list' %}">Calls List</a>
+ <a id="competitorlist-submenu" class="list-group-item" href="{% url 'competition_list' %}">Competitor Activity List</a>
+ <a id="contactlist-submenu" class="list-group-item" href="{% url 'contact_list' %}">Contact List</a>
+ <a id="marketlist-submenu" class="list-group-item" href="{% url 'market_list' %}">Market List</a>
+ <a id="conclusionlist-submenu" class="list-group-item" href="{% url 'conclusion_list' %}">Conclusion List</a>
+ <a id="itinerarylist-submenu" class="list-group-item" href="{% url 'itinerary_list' %}">Itinerary List</a>
+ <a id="summarylist-submenu" class="list-group-item" href="{% url 'summary_list' %}">Summary List</a>
+            </ul>
+            </div>
+            {% endblock leftpane %}
+                {% block content %}
+            <div class="col-md-6">
+                <form method='post' role='form' class='form-horizontal' action=''>{% csrf_token %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% for fld in form %}
+                      <div class="form-group">
+                          {% if fld.errors %}
+                            <div class="alert alert-danger">
+                                {{ fld.errors }}
+                            </div>
+                          {% endif %}
+                          <label for="{{ fld.id_for_label }}" class="col-sm-4 control-label">{{ fld.label }}</label>
+                          <div class="col-sm-8">
+                          {{ fld }}
+                      </div>
+                      </div>
+                    {% endfor %}
+                        <br />
+                        <div class="col-md-4"></div>
+                        <div class="col-md-8">
+                        <input type="submit" value="Save" class="btn btn-primary btn-lg" />
+                    </div>
+                </form>
+            </div>
+                {% endblock content %}
+                {% block rightpane %}
+            <div class="col-md-3">
+            </div>
+                {% endblock rightpane %}
+        </div>
+    </div>
+    {% endblock middle %}
+
+    {% block extra-js %}
+    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script type="text/javascript">
+        $('#id_customer').attr('class','form-control');
+        $('#id_contact').attr('class','form-control');
+        $('#id_position').attr('class','form-control');
+        $('#id_address').attr('class','form-control');
+        $('#id_products_detailed').attr('class','form-control');
+        $('#id_call_type').attr('class','form-control');
+        $('#id_call_date').attr('class','form-control');
+
+        // Set active menu to batch
+        $('.active-menu-item').removeAttr('class','active-menu-item');
+        $('#reports-menu').attr('class','active-menu-item');
+        
+        // Datepicker
+        $('#id_call_date').datepicker({'format': 'yyyy-mm-dd'});
+    </script>
+
+    {% block submenu-js %}{% endblock submenu-js %}
+    {% endblock extra-js %}
