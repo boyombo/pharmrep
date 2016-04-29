@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.db.models.aggregates import Sum
+#from django.db.models.aggregates import Sum
 
 from product.models import Customer, Product, Payment
 
@@ -18,9 +18,10 @@ def balance(request):
 
 
 def performance(request):
-    products = Product.objects.annotate(
-        Sum('product_sales__quantity'), Sum('product_sales__amount'))
-    return render(request, 'reports/performance.html', {'products': products})
+    #products = Product.objects.annotate(
+    #    Sum('product_sales__quantity'), Sum('product_sales__amount'))
+    return render(request, 'reports/performance.html',
+                  {'products': Product.objects.all()})
 
 
 def collection(request):

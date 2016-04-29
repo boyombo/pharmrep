@@ -32,8 +32,8 @@
                 {% for product in products %}
                   <tr>
                       <td>{{ product.name }}</td>
-                      <td>{{ product.product_sales__quantity__sum }}</td>
-                      <td>{{ product.product_sales__amount__sum }}</td>
+                      <td>{{ product.quantity }}</td>
+                      <td>{{ product.amount }}</td>
                 {% endfor %}
                 </tbody>
             </table>

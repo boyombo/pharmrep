@@ -13,6 +13,16 @@ class Product(models.Model):
     def __unicode__(self):
         return self.name
 
+    @property
+    def quantity(self):
+        return self.product_sales.aggregate(
+            Sum('quantity'))['quantity__sum'] or 0
+
+    @property
+    def amount(self):
+        return self.product_sales.aggregate(
+            Sum('amount'))['amount__sum'] or 0
+
 
 class Rep(models.Model):
     name = models.CharField(max_length=200)
