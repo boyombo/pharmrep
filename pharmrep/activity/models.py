@@ -104,3 +104,15 @@ class Summary(models.Model):
             rep=self.rep,
             payment_date__range=(self.start_date, self.end_date)).aggregate(
             Sum('amount'))['amount__sum'] or 0
+
+    @property
+    def calls(self):
+        return Call.objects.filter(
+            rep=self.rep,
+            call_date__range=(self.start_date, self.end_date)).count()
+
+    @property
+    def contacts(self):
+        return Contact.objects.filter(
+            rep=self.rep,
+            added_date__range=(self.start_date, self.end_date)).count()
