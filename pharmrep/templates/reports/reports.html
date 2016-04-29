@@ -22,13 +22,9 @@
 {% endblock call_nav %}
             </ul>
                 <ul class="list-group">
- <a id="calllist-submenu" class="list-group-item" href="{% url 'call_list' %}">Calls List</a>
- <a id="competitorlist-submenu" class="list-group-item" href="{% url 'competition_list' %}">Competitor Activity List</a>
- <a id="contactlist-submenu" class="list-group-item" href="{% url 'contact_list' %}">Contact List</a>
- <a id="marketlist-submenu" class="list-group-item" href="{% url 'market_list' %}">Market List</a>
- <a id="conclusionlist-submenu" class="list-group-item" href="{% url 'conclusion_list' %}">Conclusion List</a>
- <a id="itinerarylist-submenu" class="list-group-item" href="{% url 'itinerary_list' %}">Itinerary List</a>
- <a id="summarylist-submenu" class="list-group-item" href="{% url 'summary_list' %}">Summary List</a>
+ <a id="saleschart-submenu" class="list-group-item" href="{% url 'chart_sales' %}">Sales Chart</a>
+ <a id="paymentchart-submenu" class="list-group-item" href="{% url 'chart_payment' %}">Collections Chart</a>
+ <a id="callchart-submenu" class="list-group-item" href="{% url 'chart_call' %}">Calls Chart</a>
             </ul>
             </div>
             {% endblock leftpane %}

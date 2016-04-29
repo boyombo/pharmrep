@@ -1,0 +1,34 @@
+{% extends "reports/reports.html" %}
+{% load static from staticfiles %}
+
+{% block pageheader %}
+    <h3 >Charts<i class="fa fa-angle-double-right "></i></h3>
+{% endblock pageheader %}
+
+{% block extra-css %}
+<link href="{% static 'css/datepicker.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'css/jquery.jqplot.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock extra-css %}
+
+{% block extra-js %}
+    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.jqplot.min.js' %}"></script>
+    <script type="text/javascript">
+        $('#id_customer').attr('class','form-control');
+        $('#id_contact').attr('class','form-control');
+        $('#id_position').attr('class','form-control');
+        $('#id_address').attr('class','form-control');
+        $('#id_products_detailed').attr('class','form-control');
+        $('#id_call_type').attr('class','form-control');
+        $('#id_call_date').attr('class','form-control');
+
+        // Set active menu to batch
+        $('.active-menu-item').removeAttr('class','active-menu-item');
+        $('#reports-menu').attr('class','active-menu-item');
+        
+        // Datepicker
+        $('#id_call_date').datepicker({'format': 'yyyy-mm-dd'});
+    </script>
+
+    {% block chart-js %}{% endblock chart-js %}
+{% endblock extra-js %}
