@@ -4,8 +4,9 @@ from product import views
 
 
 urlpatterns = [
-    url(r'sale/$', views.sale, name='product_sale'),
-    url(r'saleslist/$', views.sales_list, name='sales_list'),
+    url(r'sale/(?P<invoice_id>\d+)/$', views.sale, name='product_sale'),
+    url(r'invoicelist/$', views.invoice_list, name='invoice_list'),
+    url(r'invoice/$', views.invoice, name='product_invoice'),
     url(r'payment/$', views.payment, name='product_payment'),
     url(r'paymentlist/$', views.payment_list, name='payment_list'),
 ]

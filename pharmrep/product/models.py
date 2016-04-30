@@ -86,6 +86,10 @@ class Invoice(models.Model):
     def __unicode__(self):
         return unicode(self.invoice_no)
 
+    @property
+    def amount(self):
+        return sum([sale.amount for sale in self.invoice_sales.all()])
+
 
 class Sale(models.Model):
     invoice = models.ForeignKey(

@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 
     {% block pageheader %}
-    <h3 >Sale ( {{ user.username }})<i class="fa fa-angle-double-right "></i></h3>
+    <h3 >Sale ( {{ invoice.invoice_no }})<i class="fa fa-angle-double-right "></i></h3>
     {% endblock pageheader %}
 
 {% block extra-css %}
@@ -15,8 +15,8 @@
             <div class="col-md-3">
                 <ul class="list-group">
                 {% block sidenav %}
-                <a class="list-group-item active" href="#">New Sale</a>
-                <a class="list-group-item" href="{% url 'sales_list' %}">View Sales</a>
+                <a class="list-group-item active" href="{% url 'product_invoice' %}">New Invoice</a>
+                <a class="list-group-item" href="{% url 'invoice_list' %}">View Invoices</a>
                 {% endblock sidenav %}
             </ul>
             </div>
@@ -30,19 +30,58 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-                    {% for fld in form %}
-                      <div class="form-group">
-                          {% if fld.errors %}
-                            <div class="alert alert-danger">
-                                {{ fld.errors }}
-                            </div>
-                          {% endif %}
-                          <label for="{{ fld.id_for_label }}" class="col-sm-4 control-label">{{ fld.label }}</label>
+
+                    <div class="form-group">
+                          <label class="col-sm-4 control-label">Invoice #</label>
                           <div class="col-sm-8">
-                          {{ fld }}
-                      </div>
-                      </div>
-                    {% endfor %}
+                              <input type="text" class="readonly" value="{{ invoice.invoice_no }}" readonly />
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                          <label class="col-sm-4 control-label">Customer</label>
+                          <div class="col-sm-8">
+                              <input type="text" class="readonly" value="{{ invoice.customer }}" readonly />
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                          <label class="col-sm-4 control-label">Sale Type</label>
+                          <div class="col-sm-8">
+                              <input type="text" class="readonly" value="{{ invoice.get_sales_type_display }}" readonly />
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.product.errors %}
+                          <div class="alert alert-danger">{{ form.product.errors }}</div>
+                        {% endif %}
+                          <label for="{{ form.product.id_for_label }}" class="col-sm-4 control-label">{{ form.product.label }}</label>
+                          <div class="col-sm-8">
+                            {{ form.product }}
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.quantity.errors %}
+                          <div class="alert alert-danger">{{ form.quantity.errors }}</div>
+                        {% endif %}
+                          <label for="{{ form.quantity.id_for_label }}" class="col-sm-4 control-label">{{ form.quantity.label }}</label>
+                          <div class="col-sm-8">
+                            {{ form.quantity }}
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.batch_size.errors %}
+                          <div class="alert alert-danger">{{ form.batch_size.errors }}</div>
+                        {% endif %}
+                          <label for="{{ form.batch_size.id_for_label }}" class="col-sm-4 control-label">{{ form.batch_size.label }}</label>
+                          <div class="col-sm-8">
+                            {{ form.batch_size }}
+                          </div>
+                    </div>
+
                         <br />
                         <div class="col-md-4"></div>
                         <div class="col-md-8">
@@ -59,22 +98,13 @@
     {% block extra-js %}
     <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
     <script type="text/javascript">
-        $('#id_rep').attr('class','form-control');
-        $('#id_customer').attr('class','form-control');
         $('#id_product').attr('class','form-control');
         $('#id_quantity').attr('class','form-control');
-        $('#id_sales_type').attr('class','form-control');
-        $('#id_invoice_no').attr('class','form-control');
+        $('#id_batch_size').attr('class','form-control');
 
         // Set active menu to batch
         $('.active-menu-item').removeAttr('class','active-menu-item');
         $('#batch-menu').attr('class','active-menu-item');
-        
-        // Datepicker
-        $('#id_invoice_date').datepicker({'format': 'yyyy-mm-dd'})
-            .on('changeDate', function(e) {
-                $(this).datepicker('hide');
-            });
     </script>
 
     {% endblock extra-js %}

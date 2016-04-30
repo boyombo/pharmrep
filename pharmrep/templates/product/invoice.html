@@ -1,0 +1,79 @@
+{% extends "plain.html" %}
+{% load static from staticfiles %}
+
+    {% block pageheader %}
+    <h3 >Invoice ( {{ user.username }})<i class="fa fa-angle-double-right "></i></h3>
+    {% endblock pageheader %}
+
+{% block extra-css %}
+<link href="{% static 'css/datepicker.css' %}" rel="stylesheet" type="text/css" />
+{% endblock extra-css %}
+
+    {% block middle %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="list-group">
+                {% block sidenav %}
+                <a class="list-group-item active" href="#">New Invoice</a>
+                <a class="list-group-item" href="{% url 'invoice_list' %}">Invoice List</a>
+                {% endblock sidenav %}
+            </ul>
+            </div>
+            <div class="col-md-6">
+                {% block content %}
+                <form method='post' role='form' class='form-horizontal' action=''>{% csrf_token %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% for fld in form %}
+                      <div class="form-group">
+                          {% if fld.errors %}
+                            <div class="alert alert-danger">
+                                {{ fld.errors }}
+                            </div>
+                          {% endif %}
+                          <label for="{{ fld.id_for_label }}" class="col-sm-4 control-label">{{ fld.label }}</label>
+                          <div class="col-sm-8">
+                          {{ fld }}
+                      </div>
+                      </div>
+                    {% endfor %}
+                        <br />
+                        <div class="col-md-4"></div>
+                        <div class="col-md-8">
+                        <input type="submit" value="Save" class="btn btn-primary btn-lg" />
+                    </div>
+                </form>
+                {% endblock content %}
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    {% endblock middle %}
+
+    {% block extra-js %}
+    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script type="text/javascript">
+        $('#id_customer').attr('class','form-control');
+        $('#id_product').attr('class','form-control');
+        $('#id_sales_type').attr('class','form-control');
+        $('#id_invoice_no').attr('class','form-control');
+        $('#id_invoice_date').attr('class','form-control');
+
+        // Set active menu to batch
+        $('.active-menu-item').removeAttr('class','active-menu-item');
+        $('#batch-menu').attr('class','active-menu-item');
+        
+        // Datepicker
+        $('#id_invoice_date').datepicker({'format': 'yyyy-mm-dd'})
+            .on('changeDate', function(e) {
+                $(this).datepicker('hide');
+            });
+    </script>
+
+    {% endblock extra-js %}

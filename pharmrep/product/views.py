@@ -4,32 +4,61 @@ from django.db.models.aggregates import Sum
 from django.contrib import messages
 #from django.views.generic.edit import CreateView
 
-from product.forms import SaleForm, PaymentForm
-from product.models import Rep, Sale, Payment
+from product.forms import SaleForm, PaymentForm, InvoiceForm
+from product.models import Rep, Sale, Payment, Invoice
 
 
 @login_required
-def sale(request):
+def invoice(request):
     if request.method == 'POST':
-        form = SaleForm(request.user, request.POST)
-        #import pdb;pdb.set_trace()
+        form = InvoiceForm(request.user, request.POST)
         if form.is_valid():
             rep = Rep.objects.get(user=request.user)
-            obj = form.save(commit=False)
-            obj.rep = rep
-            obj.amount = obj.quantity * obj.product.rate
-            obj.save()
-            messages.success(request, 'Successfully added sale')
+            invoice = form.save(commit=False)
+            invoice.rep = rep
+            invoice.save()
+            messages.success(request, 'Successfully added invoice')
+            return redirect('product_sale', invoice.id)
     else:
-        form = SaleForm(request.user)
-    return render(request, 'product/sale.html', {'form': form})
+        form = InvoiceForm(request.user)
+    return render(request, 'product/invoice.html', {'form': form})
 
 
 @login_required
-def sales_list(request):
+def sale(request, invoice_id):
+    invoice = get_object_or_404(Invoice, id=invoice_id)
+    if request.method == 'POST':
+        form = SaleForm(request.POST)
+        #import pdb;pdb.set_trace()
+        if form.is_valid():
+            sale = form.save(commit=False)
+            sale.invoice = invoice
+            sale.amount = sale.quantity * sale.product.rate *\
+                sale.batch_size.quantity
+            sale.save()
+            #rep = Rep.objects.get(user=request.user)
+            #obj = form.save(commit=False)
+            #obj.rep = rep
+            #obj.amount = obj.quantity * obj.product.rate
+            #obj.save()
+            messages.success(
+                request, 'Successfully added sale to invoice {}'.format(
+                    invoice.invoice_no))
+            return redirect('product_sale', invoice.id)
+    else:
+        form = SaleForm()
+    return render(request, 'product/sale.html', {
+        'form': form,
+        'invoice': invoice
+    })
+
+
+@login_required
+def invoice_list(request):
     rep = get_object_or_404(Rep, user=request.user)
-    sales = Sale.objects.filter(rep=rep).order_by('-sales_date')
-    return render(request, 'product/sales_list.html', {'sales': sales})
+    invoices = Invoice.objects.filter(rep=rep).order_by('-invoice_date')
+    #sales = Sale.objects.filter(rep=rep).order_by('-sales_date')
+    return render(request, 'product/invoice_list.html', {'invoices': invoices})
 
 
 @login_required
