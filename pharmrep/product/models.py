@@ -15,7 +15,7 @@ class PriceTemplate(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
-    rate = models.IntegerField()
+    rate = models.IntegerField('Default price of product')
     template = models.ManyToManyField(
         PriceTemplate,
         through='ProductPriceTemplate',
@@ -78,6 +78,7 @@ class Customer(models.Model):
     phone1 = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True, null=True)
     customer_type = models.PositiveIntegerField(choices=CUSTOMER_TYPE)
+    price_template = models.ForeignKey(PriceTemplate, null=True, blank=True)
 
     def __unicode__(self):
         return self.name
