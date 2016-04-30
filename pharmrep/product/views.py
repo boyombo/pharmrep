@@ -5,7 +5,7 @@ from django.contrib import messages
 #from django.views.generic.edit import CreateView
 
 from product.forms import SaleForm, PaymentForm, InvoiceForm
-from product.models import Rep, Sale, Payment, Invoice
+from product.models import Rep, Sale, Payment, Invoice, ProductPriceTemplate
 
 
 @login_required
@@ -33,14 +33,8 @@ def sale(request, invoice_id):
         if form.is_valid():
             sale = form.save(commit=False)
             sale.invoice = invoice
-            sale.amount = sale.quantity * sale.product.rate *\
-                sale.batch_size.quantity
+            sale.amount = sale.quantity * sale.rate * sale.batch_size.quantity
             sale.save()
-            #rep = Rep.objects.get(user=request.user)
-            #obj = form.save(commit=False)
-            #obj.rep = rep
-            #obj.amount = obj.quantity * obj.product.rate
-            #obj.save()
             messages.success(
                 request, 'Successfully added sale to invoice {}'.format(
                     invoice.invoice_no))

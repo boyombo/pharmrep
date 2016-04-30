@@ -124,6 +124,21 @@ class Sale(models.Model):
     def __unicode__(self):
         return unicode(self.customer)
 
+    @property
+    def rate(self):
+        templ = self.invoice.customer.price_template
+        if not templ:
+            price = self.product.rate
+        else:
+            try:
+                prod_price_templ = ProductPriceTemplate.objects.get(
+                    product=self.product, template=templ)
+            except ProductPriceTemplate.DoesNotExist:
+                price = self.product.rate
+            else:
+                price = prod_price_templ.price
+        return price
+
 
 class Payment(models.Model):
     EPAYMENT = 0
