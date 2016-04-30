@@ -16,10 +16,10 @@ class PeopleAdmin(admin.ModelAdmin):
 @admin.register(Sale)
 class SaleAdmin(admin.ModelAdmin):
     list_display = ['product', 'rep', 'customer', 'quantity',
-                    'sales_date', 'recorded_date']
+                    'invoice_date', 'recorded_date']
 
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ['amount', 'rep', 'customer', 'receipt_no',
-                    'payment_date', 'recorded_date', 'balance']
+                    'payment_date', 'receipt_date', 'recorded_date', 'balance']

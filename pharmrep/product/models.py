@@ -75,7 +75,6 @@ class Sale(models.Model):
     amount = models.IntegerField()
     invoice_no = models.CharField(max_length=200, blank=True)
     invoice_date = models.DateField(blank=True, null=True)
-    sales_date = models.DateField()
     sales_type = models.PositiveIntegerField(choices=SALES_TYPES)
     recorded_date = models.DateTimeField(default=datetime.now)
 
