@@ -6,9 +6,20 @@ from django.contrib.auth.models import User
 from django.db.models.aggregates import Sum
 
 
+class PriceTemplate(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(max_length=200)
     rate = models.IntegerField()
+    template = models.ManyToManyField(
+        PriceTemplate,
+        through='ProductPriceTemplate',
+        through_fields=('product', 'template'))
 
     def __unicode__(self):
         return self.name
@@ -22,6 +33,15 @@ class Product(models.Model):
     def amount(self):
         return self.product_sales.aggregate(
             Sum('amount'))['amount__sum'] or 0
+
+
+class ProductPriceTemplate(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    template = models.ForeignKey(PriceTemplate, on_delete=models.CASCADE)
+    price = models.IntegerField()
+
+    def __unicode__(self):
+        return "{0} - {1}".format(self.product, self.template)
 
 
 class BatchSize(models.Model):

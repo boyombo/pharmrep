@@ -1,12 +1,19 @@
 from django.contrib import admin
 
 from product.models import Product, Rep, Customer, Sale, Payment, Invoice,\
-    BatchSize
+    BatchSize, PriceTemplate, ProductPriceTemplate
+
+
+class ProductPriceTemplateAdmin(admin.TabularInline):
+    model = ProductPriceTemplate
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'rate']
+    inlines = [
+        ProductPriceTemplateAdmin
+    ]
 
 
 @admin.register(BatchSize)
@@ -14,7 +21,7 @@ class BatchSizeAdmin(admin.ModelAdmin):
     list_display = ['name', 'quantity']
 
 
-@admin.register(Rep, Customer)
+@admin.register(Rep, Customer, PriceTemplate)
 class PeopleAdmin(admin.ModelAdmin):
     list_display = ['name']
 
