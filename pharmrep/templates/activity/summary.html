@@ -13,7 +13,14 @@ $('#id_report').attr('class','form-control');
 $('#id_start_date').attr('class','form-control');
 $('#id_end_date').attr('class','form-control');
 
-$('#id_start_date').datepicker({'format': 'yyyy-mm-dd'});
-$('#id_end_date').datepicker({'format': 'yyyy-mm-dd'});
+//Datepicker
+$('#id_start_date').datepicker({'format': 'yyyy-mm-dd'})
+    .on('changeDate', function(e) {
+        $(this).datepicker('hide');
+    });
+$('#id_end_date').datepicker({'format': 'yyyy-mm-dd'})
+    .on('changeDate', function(e) {
+        $(this).datepicker('hide');
+    });
 </script>
 {% endblock submenu-js %}

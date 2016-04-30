@@ -20,7 +20,7 @@
  <a id="private-submenu" class="list-group-item" href="{% url 'private_call' %}">Private Hospital Call</a>
  <a id="trade-submenu" class="list-group-item" href="{% url 'trade_call' %}">Trade Call</a>
  <a id="competitor-submenu" class="list-group-item" href="{% url 'competition' %}">Competitor Activity</a>
- <a id="contact-submenu" class="list-group-item" href="{% url 'contact' %}">Contact</a>
+ <a id="contact-submenu" class="list-group-item" href="{% url 'contact' %}">New Contact</a>
  <a id="market-submenu" class="list-group-item" href="{% url 'market' %}">Market Need</a>
  <a id="conclusion-submenu" class="list-group-item" href="{% url 'conclusion' %}">Conclusion</a>
  <a id="itinerary-submenu" class="list-group-item" href="{% url 'itinerary' %}">Itinerary</a>
@@ -93,7 +93,10 @@
         $('#call-menu').attr('class','active-menu-item');
         
         // Datepicker
-        $('#id_call_date').datepicker({'format': 'yyyy-mm-dd'});
+        $('#id_call_date').datepicker({'format': 'yyyy-mm-dd'})
+            .on('changeDate', function(e) {
+                $(this).datepicker('hide');
+            });
     </script>
 
     {% block submenu-js %}{% endblock submenu-js %}

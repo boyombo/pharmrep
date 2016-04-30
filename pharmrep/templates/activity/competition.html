@@ -7,7 +7,10 @@
 <script type="text/javascript">
 $('.list-group-item').removeClass('active');
 $('#competitor-submenu').addClass('active');
-        // Datepicker
-        $('#id_recorded_date').datepicker({'format': 'yyyy-mm-dd'});
+// Datepicker
+$('#id_recorded_date').datepicker({'format': 'yyyy-mm-dd'})
+    .on('changeDate', function(e) {
+        $(this).datepicker('hide');
+    });
 </script>
 {% endblock submenu-js %}

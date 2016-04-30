@@ -63,14 +63,22 @@
         $('#id_customer').attr('class','form-control');
         $('#id_product').attr('class','form-control');
         $('#id_quantity').attr('class','form-control');
-        $('#id_sales_date').attr('class','form-control');
+        //$('#id_sales_date').attr('class','form-control');
+        $('#id_invoice_no').attr('class','form-control');
 
         // Set active menu to batch
         $('.active-menu-item').removeAttr('class','active-menu-item');
         $('#batch-menu').attr('class','active-menu-item');
         
         // Datepicker
-        $('#id_sales_date').datepicker({'format': 'yyyy-mm-dd'});
+        $('#id_sales_date').datepicker({'format': 'yyyy-mm-dd'})
+            .on('changeDate', function(e) {
+                $(this).datepicker('hide');
+            });
+        $('#id_invoice_date').datepicker({'format': 'yyyy-mm-dd'})
+            .on('changeDate', function(e) {
+                $(this).datepicker('hide');
+            });
     </script>
 
     {% endblock extra-js %}

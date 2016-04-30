@@ -11,6 +11,9 @@ $('#market-submenu').addClass('active');
 $('#id_text').attr('class','form-control');
 $('#id_recorded_date').attr('class','form-control');
 // Datepicker
-$('#id_recorded_date').datepicker({'format': 'yyyy-mm-dd'});
+$('#id_recorded_date').datepicker({'format': 'yyyy-mm-dd'})
+    .on('changeDate', function(e) {
+        $(this).datepicker('hide');
+    });
 </script>
 {% endblock submenu-js %}
