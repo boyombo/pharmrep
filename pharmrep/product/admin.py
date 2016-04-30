@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from product.models import Product, Rep, Customer, Sale, Payment
+from product.models import Product, Rep, Customer, Sale, Payment, Invoice,\
+    BatchSize
 
 
 @admin.register(Product)
@@ -8,15 +9,26 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'rate']
 
 
+@admin.register(BatchSize)
+class BatchSizeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'quantity']
+
+
 @admin.register(Rep, Customer)
 class PeopleAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
+@admin.register(Invoice)
+class InvoiceAdmin(admin.ModelAdmin):
+    list_display = ['rep', 'customer', 'invoice_no',
+                    'invoice_date', 'sales_type', 'recorded_date']
+
+
 @admin.register(Sale)
 class SaleAdmin(admin.ModelAdmin):
-    list_display = ['product', 'rep', 'customer', 'quantity',
-                    'invoice_date', 'recorded_date']
+    list_display = ['product', 'batch_size', 'quantity',
+                    'invoice', 'recorded_date']
 
 
 @admin.register(Payment)

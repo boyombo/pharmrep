@@ -24,6 +24,14 @@ class Product(models.Model):
             Sum('amount'))['amount__sum'] or 0
 
 
+class BatchSize(models.Model):
+    name = models.CharField(max_length=100)
+    quantity = models.PositiveIntegerField()
+
+    def __unicode__(self):
+        return self.name
+
+
 class Rep(models.Model):
     name = models.CharField(max_length=200)
     user = models.ForeignKey(User)
@@ -63,19 +71,29 @@ class Customer(models.Model):
         return sales - paymt
 
 
-class Sale(models.Model):
+class Invoice(models.Model):
     ACTUAL_SALES = 0
     SOR = 1
     SAMPLES = 2
-    SALES_TYPES = ((0, 'Actual Sales'), (1, 'SOR'), (2, 'Samples'))
-    rep = models.ForeignKey(Rep, related_name='rep_sales')
-    customer = models.ForeignKey(Customer, related_name='customer_sales')
-    product = models.ForeignKey(Product, related_name='product_sales')
-    quantity = models.PositiveIntegerField()
-    amount = models.IntegerField()
+    INVOICE_TYPES = ((0, 'Actual Sales'), (1, 'SOR'), (2, 'Samples'))
+    rep = models.ForeignKey(Rep, related_name='rep_invoices')
+    customer = models.ForeignKey(Customer, related_name='customer_invoices')
     invoice_no = models.CharField(max_length=200, blank=True)
     invoice_date = models.DateField(blank=True, null=True)
-    sales_type = models.PositiveIntegerField(choices=SALES_TYPES)
+    sales_type = models.PositiveIntegerField(choices=INVOICE_TYPES)
+    recorded_date = models.DateTimeField(default=datetime.now)
+
+    def __unicode__(self):
+        return unicode(self.invoice_no)
+
+
+class Sale(models.Model):
+    invoice = models.ForeignKey(
+        Invoice, related_name='invoice_sales', null=True)
+    product = models.ForeignKey(Product, related_name='product_sales')
+    batch_size = models.ForeignKey(BatchSize, null=True)
+    quantity = models.PositiveIntegerField()
+    amount = models.IntegerField()
     recorded_date = models.DateTimeField(default=datetime.now)
 
     def __unicode__(self):
