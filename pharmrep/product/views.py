@@ -62,6 +62,12 @@ def invoice_list(request):
 
 
 @login_required
+def invoice_detail(request, invoice_id):
+    invoice = get_object_or_404(Invoice, id=invoice_id)
+    return render(request, 'product/invoice_detail.html', {'invoice': invoice})
+
+
+@login_required
 def payment(request):
     try:
         rep = Rep.objects.get(user=request.user)

@@ -32,7 +32,7 @@
                         <th>Invoice Date</th>
                         <th>Sales Type</th>
                         <th>Total Amount</th>
-                        <th>Add Sales</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +43,7 @@
                       <td>{{ invoice.invoice_date }}</td>
                       <td>{{ invoice.get_sales_type_display }}</td>
                       <td>{{ invoice.amount }}</td>
-                      <td><a href="{% url 'product_sale' invoice.id  %}">add sale</a></td>
+                      <td><a href="{% url 'product_invoice_detail' invoice.id  %}">details</a></td>
                 {% endfor %}
                 </tbody>
             </table>
