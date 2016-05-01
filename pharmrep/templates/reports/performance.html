@@ -1,4 +1,5 @@
 {% extends "reports/reports.html" %}
+{% load humanize %}
 
 {% block start %}
     <section class="headline-sec">
@@ -33,7 +34,7 @@
                   <tr>
                       <td>{{ product.name }}</td>
                       <td>{{ product.quantity }}</td>
-                      <td>{{ product.amount }}</td>
+                      <td>{{ product.amount|intcomma }}</td>
                 {% endfor %}
                 </tbody>
             </table>

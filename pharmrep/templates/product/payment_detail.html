@@ -1,0 +1,49 @@
+{% extends "product/sale.html" %}
+{% load humanize %}
+
+{% block start %}
+    <section class="headline-sec">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}             </li>
+        {% endfor %}
+    </ul>
+        {% endif %}
+        <div class="overlay ">
+            {% block pageheader %}
+            <h3 >COLLECTION DETAIL <i class="fa fa-angle-double-right "></i></h3>
+            {% endblock pageheader %}
+
+        </div>
+    </section>
+{% endblock start %}
+
+                {% block sidenav %}
+                <a class="list-group-item" href="{% url 'product_payment' %}">New Collection</a>
+                <a class="list-group-item" href="{% url 'payment_list' %}">View Collections</a>
+                {% endblock sidenav %}
+
+            {% block content %}
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>{{ payment.customer }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Amount</td><td>{{ payment.amount|intcomma }}</td></tr>
+                  <tr><td>Receipt #</td><td>{{ payment.receipt_no }}</td></tr>
+                  <tr><td>Receipt Date</td><td>{{ payment.receipt_date }}</td></tr>
+                  <tr><td>Payment Date</td><td>{{ payment.payment_date }}</td></tr>
+                  <tr><td>Balance</td><td>{{ payment.balance|intcomma }}</td></tr>
+                  <tr><td>Bank of Payment</td><td>{{ payment.bank_of_payment }}</td></tr>
+                  <tr><td>Mode of Payment</td><td>{{ payment.mode_of_payment }}</td></tr>
+                  <tr><td>Teller #</td><td>{{ payment.teller_number }}</td></tr>
+                  <tr><td>Teller Date</td><td>{{ payment.teller_date }}</td></tr>
+                  <tr><td>Cheque Date</td><td>{{ payment.cheque_date }}</td></tr>
+                  <tr><td>Remarks</td><td>{{ payment.remarks|linebreaks }}</td></tr>
+                </tbody>
+            </table>
+            {% endblock content %}

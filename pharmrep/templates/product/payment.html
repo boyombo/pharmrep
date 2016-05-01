@@ -26,6 +26,123 @@
                             </div>
                         {% endfor %}
                     {% endif %}
+
+                    <div class="form-group">
+                        {% if form.customer.errors %}
+                          <div class="alert alert-danger">{{ form.customer.errors }}</div>
+                        {% endif %}
+                          <label for="id_customer" class="col-sm-4 control-label">Customer</label>
+                          <div class="col-sm-8">
+                            {{ form.customer }}
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.amount.errors %}
+                          <div class="alert alert-danger">{{ form.amount.errors }}</div>
+                        {% endif %}
+                          <label for="id_amount" class="col-sm-4 control-label">Amount</label>
+                          <div class="col-sm-8">
+                            {{ form.amount }}
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.receipt_no.errors %}
+                          <div class="alert alert-danger">{{ form.receipt_no.errors }}</div>
+                        {% endif %}
+                          <label for="id_receipt_no" class="col-sm-4 control-label">Receipt No</label>
+                          <div class="col-sm-8">
+                            {{ form.receipt_no }}
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.receipt_date.errors %}
+                          <div class="alert alert-danger">{{ form.receipt_date.errors }}</div>
+                        {% endif %}
+                          <label for="id_receipt_date" class="col-sm-4 control-label">Receipt Date</label>
+                          <div class="col-sm-8">
+                            {{ form.receipt_date }}
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.payment_date.errors %}
+                          <div class="alert alert-danger">{{ form.payment_date.errors }}</div>
+                        {% endif %}
+                          <label for="id_payment_date" class="col-sm-4 control-label">Payment Date</label>
+                          <div class="col-sm-8">
+                            {{ form.payment_date }}
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.bank_of_payment.errors %}
+                          <div class="alert alert-danger">{{ form.bank_of_payment.errors }}</div>
+                        {% endif %}
+                          <label for="id_bank_of_payment" class="col-sm-4 control-label">Bank of Payment</label>
+                          <div class="col-sm-8">
+                            {{ form.bank_of_payment }}
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.mode_of_payment.errors %}
+                          <div class="alert alert-danger">{{ form.mode_of_payment.errors }}</div>
+                        {% endif %}
+                          <label for="id_mode_of_payment" class="col-sm-4 control-label">Mode of Payment</label>
+                          <div class="col-sm-8">
+                            {{ form.mode_of_payment }}
+                          </div>
+                    </div>
+
+                    <div id="teller_details">
+                    <div class="form-group">
+                        {% if form.teller_number.errors %}
+                          <div class="alert alert-danger">{{ form.teller_number.errors }}</div>
+                        {% endif %}
+                          <label for="id_teller_number" class="col-sm-4 control-label">Teller Number</label>
+                          <div class="col-sm-8">
+                            {{ form.teller_number }}
+                          </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.teller_date.errors %}
+                          <div class="alert alert-danger">{{ form.teller_date.errors }}</div>
+                        {% endif %}
+                          <label for="id_teller_date" class="col-sm-4 control-label">Teller Date</label>
+                          <div class="col-sm-8">
+                            {{ form.teller_date }}
+                          </div>
+                    </div>
+                    </div>
+
+                    <div id="cheque_details">
+                    <div class="form-group">
+                        {% if form.cheque_date.errors %}
+                          <div class="alert alert-danger">{{ form.cheque_date.errors }}</div>
+                        {% endif %}
+                          <label for="id_cheque_date" class="col-sm-4 control-label">Cheque Date</label>
+                          <div class="col-sm-8">
+                            {{ form.cheque_date }}
+                          </div>
+                    </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if form.remarks.errors %}
+                          <div class="alert alert-danger">{{ form.remarks.errors }}</div>
+                        {% endif %}
+                          <label for="id_remarks" class="col-sm-4 control-label">Remarks</label>
+                          <div class="col-sm-8">
+                            {{ form.remarks }}
+                          </div>
+                    </div>
+
+
+                    {% comment %}
                     {% for fld in form %}
                       <div class="form-group">
                           {% if fld.errors %}
@@ -39,6 +156,7 @@
                       </div>
                       </div>
                     {% endfor %}
+                    {% endcomment %}
                         <br />
                         <div class="col-md-4"></div>
                         <div class="col-md-8">
@@ -57,12 +175,15 @@
     <script type="text/javascript">
         $('#id_customer').attr('class','form-control');
         $('#id_amount').attr('class','form-control');
-        //$('#id_amount').attr('class','form-control');
-        $('#id_mode_of_payment').attr('class','form-control');
-        $('#id_teller_number').attr('class','form-control');
-        $('#id_remarks').attr('class','form-control');
         $('#id_receipt_no').attr('class','form-control');
-        //$('#id_payment_date').attr('class','form-control');
+        $('#id_mode_of_payment').attr('class','form-control');
+        $('#id_bank_of_payment').attr('class','form-control');
+        $('#id_teller_number').attr('class','form-control');
+        $('#id_teller_date').attr('class','form-control');
+        $('#id_cheque_date').attr('class','form-control');
+        $('#id_receipt_date').attr('class','form-control');
+        $('#id_payment_date').attr('class','form-control');
+        $('#id_remarks').attr('class','form-control');
 
         // Set active menu to batch
         $('.active-menu-item').removeAttr('class','active-menu-item');
@@ -81,5 +202,26 @@
             .on('changeDate', function(e) {
                 $(this).datepicker('hide');
             });
+        $('#id_cheque_date').datepicker({'format': 'yyyy-mm-dd'})
+            .on('changeDate', function(e) {
+                $(this).datepicker('hide');
+            });
+        // Mode of payment hide/show
+        var hideall = function(){
+            $('#cheque_details').hide();
+            $('#teller_details').hide();
+        };
+
+        hideall();
+
+        $('#id_mode_of_payment').change(function(){
+            var selected = $('#id_mode_of_payment').val();
+            hideall();
+            if (selected == 1){
+                $('#cheque_details').show();
+            } else if (selected == 2){
+                $('#teller_details').show();
+            }
+        });
     </script>
     {% endblock extra-js %}

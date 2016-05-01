@@ -11,4 +11,6 @@ urlpatterns = [
         views.invoice_detail, name='product_invoice_detail'),
     url(r'payment/$', views.payment, name='product_payment'),
     url(r'paymentlist/$', views.payment_list, name='payment_list'),
+    url(r'paymentdetail/(?P<payment_id>\d+)/$',
+        views.payment_detail, name='payment_detail'),
 ]

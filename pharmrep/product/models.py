@@ -85,8 +85,10 @@ class Customer(models.Model):
 
     @property
     def balance(self):
-        sales = self.customer_sales.aggregate(
+        sales = Sale.objects.filter(invoice__customer=self).aggregate(
             Sum('amount'))['amount__sum'] or 0
+        #sales = self.customer_sales.aggregate(
+        #    Sum('amount'))['amount__sum'] or 0
         paymt = self.customer_payments.aggregate(
             Sum('amount'))['amount__sum'] or 0
         return sales - paymt
@@ -154,9 +156,11 @@ class Payment(models.Model):
     receipt_date = models.DateField()
     recorded_date = models.DateTimeField(default=datetime.now)
     balance = models.IntegerField()
+    bank_of_payment = models.CharField(max_length=200, blank=True)
     mode_of_payment = models.PositiveIntegerField(choices=MODE_OF_PAYMENT)
     teller_number = models.CharField(max_length=50, blank=True)
     teller_date = models.DateField(blank=True, null=True)
+    cheque_date = models.DateField(blank=True, null=True)
     remarks = models.TextField(blank=True)
 
     def __unicode__(self):

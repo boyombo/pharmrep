@@ -5,7 +5,7 @@ from django.contrib import messages
 #from django.views.generic.edit import CreateView
 
 from product.forms import SaleForm, PaymentForm, InvoiceForm
-from product.models import Rep, Sale, Payment, Invoice, ProductPriceTemplate
+from product.models import Rep, Sale, Payment, Invoice
 
 
 @login_required
@@ -75,7 +75,7 @@ def payment(request):
             obj = form.save(commit=False)
             obj.rep = rep
             total_sales = Sale.objects.filter(
-                customer=obj.customer, rep=rep).aggregate(
+                invoice__customer=obj.customer, invoice__rep=rep).aggregate(
                 Sum('amount'))['amount__sum'] or 0
             total_payment = Payment.objects.filter(
                 customer=obj.customer, rep=rep).aggregate(
@@ -83,7 +83,7 @@ def payment(request):
             obj.balance = total_sales - total_payment - amt
             obj.save()
             messages.success(request, 'Successfully added collection')
-            #return redirect('payment_list')
+            return redirect('product_payment')
     else:
         form = PaymentForm()
     return render(request, 'product/payment.html', {'form': form})
@@ -94,3 +94,9 @@ def payment_list(request):
     rep = get_object_or_404(Rep, user=request.user)
     payments = Payment.objects.filter(rep=rep)
     return render(request, 'product/payment_list.html', {'payments': payments})
+
+
+@login_required
+def payment_detail(request, payment_id):
+    payment = get_object_or_404(Payment, id=payment_id)
+    return render(request, 'product/payment_detail.html', {'payment': payment})
