@@ -94,9 +94,9 @@ class Summary(models.Model):
     @property
     def sales(self):
         return Sale.objects.filter(
-            rep=self.rep,
-            sales_date__range=(self.start_date, self.end_date)).aggregate(
-            Sum('amount'))['amount__sum'] or 0
+            invoice__rep=self.rep,
+            invoice__invoice_date__range=(self.start_date, self.end_date)
+            ).aggregate(Sum('amount'))['amount__sum'] or 0
 
     @property
     def collections(self):
