@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from product.models import Product, Rep, Customer, Sale, Payment, Invoice,\
     BatchSize, PriceTemplate, ProductPriceTemplate
@@ -42,3 +44,17 @@ class SaleAdmin(admin.ModelAdmin):
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ['amount', 'rep', 'customer', 'receipt_no',
                     'payment_date', 'receipt_date', 'recorded_date', 'balance']
+
+
+class RepInline(admin.StackedInline):
+    model = Rep
+    can_delete = False
+    verbose_name_plural = 'Representative'
+
+
+class UserAdmin(BaseUserAdmin):
+    inlines = [RepInline, ]
+
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)

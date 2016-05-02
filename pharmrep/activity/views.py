@@ -172,7 +172,7 @@ class SummaryView(BaseActivityCreateView):
         rep = Rep.objects.get(user=self.request.user)
         obj = form.save(commit=False)
         obj.rep = rep
-        total_sales = Sale.objects.filter(rep=rep).aggregate(
+        total_sales = Sale.objects.filter(invoice__rep=rep).aggregate(
             Sum('amount'))['amount__sum'] or 0
         total_payment = Payment.objects.filter(rep=rep).aggregate(
             Sum('amount'))['amount__sum'] or 0
@@ -185,3 +185,10 @@ class SummaryView(BaseActivityCreateView):
 class SummaryListView(BaseActivityListView):
     model = activity_models.Summary
     order_by = '-start_date'
+
+
+@login_required
+def summary_detail(request, summary_id):
+    summary = get_object_or_404(activity_models.Summary, id=summary_id)
+    return render(request, 'activity/summary_detail.html',
+                  {'summary': summary})

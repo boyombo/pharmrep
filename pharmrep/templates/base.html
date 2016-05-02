@@ -51,7 +51,6 @@
                   <li><a id="payment-menu" href="{% url 'product_payment' %}">COLLECTION</a></li>
                   <li><a id="call-menu" href="{% url 'govt_call' %}">ACTIVITIES</a></li>
                   <li><a id="reports-menu" href="{% url 'report_balance' %}">REPORTS</a></li>
-                     <li><a id="contact-menu" href="">MGT</a></li>
                      {% if user.is_authenticated %}
                      <li><a id="logout-menu" href="{% url 'logout' %}">logout</a></li>
                      {% endif %}

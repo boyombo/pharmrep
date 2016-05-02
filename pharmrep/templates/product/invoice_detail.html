@@ -20,7 +20,7 @@
 
                 {% block sidenav %}
                 <a class="list-group-item" href="{% url 'product_invoice' %}">New Invoice</a>
-                <a class="list-group-item active" href="#">Invoice List</a>
+                <a class="list-group-item active" href="{% url 'invoice_list' %}">Invoice List</a>
                 {% endblock sidenav %}
 
             {% block content %}
@@ -67,5 +67,5 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <a href="{% url 'product_sale' invoice.id  %}">add sale</a>
+            <a class="btn btn-primary" href="{% url 'product_sale' invoice.id  %}">add sale</a>
             {% endblock content %}

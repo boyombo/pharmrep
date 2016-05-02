@@ -24,4 +24,6 @@ urlpatterns = [
     url(r'summary/$', views.SummaryView.as_view(), name='summary'),
     url(r'summarylist/$', views.SummaryListView.as_view(),
         name='summary_list'),
+    url(r'summarydetail/(?P<summary_id>\d+)/$', views.summary_detail,
+        name='summary_detail'),
 ]

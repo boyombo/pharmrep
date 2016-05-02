@@ -1,4 +1,5 @@
 {% extends "activity/call.html" %}
+{% load humanize %}
 
 {% block start %}
     <section class="headline-sec">
@@ -11,7 +12,7 @@
         {% endif %}
         <div class="overlay ">
             {% block pageheader %}
-            <h3>SUMMARY LIST <i class="fa fa-angle-double-right "></i></h3>
+            <h3>SUMMARY DETAIL <i class="fa fa-angle-double-right "></i></h3>
             {% endblock pageheader %}
 
         </div>
@@ -23,24 +24,29 @@
             <table class="table table-striped table-responsive">
                 <thead>
                     <tr>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Sales</th>
-                        <th>Collections</th>
-                        <th>Outstanding</th>
-                        <th>Detail</th>
+                        <th>Date Range</th>
+                        <th>{{ summary.start_date }} - {{ summary.end_date }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for summary in summary_list %}
                   <tr>
-                      <td>{{ summary.start_date }}</td>
-                      <td>{{ summary.end_date }}</td>
-                      <td>{{ summary.sales }}</td>
-                      <td>{{ summary.collections }}</td>
-                      <td>{{ summary.outstanding }}</td>
-                      <td><a href="{% url 'summary_detail' summary.id %}">detail</a></td>
-                {% endfor %}
+                      <td>Sales</td><td>{{ summary.sales|intcomma }}</td>
+                  </tr>
+                  <tr>
+                      <td>Collections</td><td>{{ summary.collections|intcomma }}</td>
+                  </tr>
+                  <tr>
+                      <td>Outstanding</td><td>{{ summary.outstanding|intcomma }}</td>
+                  </tr>
+                  <tr>
+                      <td>No of Calls</td><td>{{ summary.calls|intcomma }}</td>
+                  </tr>
+                  <tr>
+                      <td>New Contacts</td><td>{{ summary.contacts|intcomma }}</td>
+                  </tr>
+                  <tr>
+                      <td>Report</td><td>{{ summary.report|linebreaks }}</td>
+                  </tr>
                 </tbody>
             </table>
         </div>

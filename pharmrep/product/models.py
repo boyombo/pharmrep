@@ -54,7 +54,7 @@ class BatchSize(models.Model):
 
 class Rep(models.Model):
     name = models.CharField(max_length=200)
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.name
