@@ -5,7 +5,8 @@ from django.contrib import messages
 #from django.views.generic.edit import CreateView
 
 from product.forms import SaleForm, PaymentForm, InvoiceForm
-from product.models import Rep, Sale, Payment, Invoice
+from product.models import Sale, Payment, Invoice
+from core.views import BaseActivityListView as BaseListView
 
 
 @login_required
@@ -13,9 +14,9 @@ def invoice(request):
     if request.method == 'POST':
         form = InvoiceForm(request.user, request.POST)
         if form.is_valid():
-            rep = Rep.objects.get(user=request.user)
+            #rep = Rep.objects.get(user=request.user)
             invoice = form.save(commit=False)
-            invoice.rep = rep
+            invoice.rep = request.user.rep
             invoice.save()
             messages.success(request, 'Successfully added invoice')
             return redirect('product_sale', invoice.id)
@@ -47,12 +48,9 @@ def sale(request, invoice_id):
     })
 
 
-@login_required
-def invoice_list(request):
-    rep = get_object_or_404(Rep, user=request.user)
-    invoices = Invoice.objects.filter(rep=rep).order_by('-invoice_date')
-    #sales = Sale.objects.filter(rep=rep).order_by('-sales_date')
-    return render(request, 'product/invoice_list.html', {'invoices': invoices})
+class InvoiceListView(BaseListView):
+    model = Invoice
+    order_by = '-invoice_date'
 
 
 @login_required
@@ -63,9 +61,8 @@ def invoice_detail(request, invoice_id):
 
 @login_required
 def payment(request):
-    try:
-        rep = Rep.objects.get(user=request.user)
-    except Rep.DoesNotExist:
+    rep = request.user.rep
+    if not rep:
         messages.error(request, 'You need to be a rep to make collections')
         return redirect('/accounts/login/')
     if request.method == 'POST':
@@ -89,11 +86,9 @@ def payment(request):
     return render(request, 'product/payment.html', {'form': form})
 
 
-@login_required
-def payment_list(request):
-    rep = get_object_or_404(Rep, user=request.user)
-    payments = Payment.objects.filter(rep=rep)
-    return render(request, 'product/payment_list.html', {'payments': payments})
+class PaymentListView(BaseListView):
+    model = Payment
+    order_by = '-receipt_date'
 
 
 @login_required

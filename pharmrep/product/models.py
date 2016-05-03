@@ -55,6 +55,7 @@ class BatchSize(models.Model):
 class Rep(models.Model):
     name = models.CharField(max_length=200)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    supervisor = models.ForeignKey('Rep', null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -124,7 +125,7 @@ class Sale(models.Model):
     recorded_date = models.DateTimeField(default=datetime.now)
 
     def __unicode__(self):
-        return unicode(self.customer)
+        return unicode(self.invoice)
 
     @property
     def rate(self):

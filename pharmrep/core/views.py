@@ -1,0 +1,40 @@
+from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
+
+@method_decorator(login_required, name='dispatch')
+class BaseActivityListView(ListView):
+    model = None
+    order_by = '-recorded_date'
+
+    def get_queryset(self):
+        params = {}
+        if self.request.user.rep:
+            params.update({'rep': self.request.user.rep})
+        return self.model.objects.filter(**params).order_by(self.order_by)
+
+
+@method_decorator(login_required, name='dispatch')
+class BaseActivityCreateView(CreateView):
+    model = None
+    success_msg = None
+    success_url = None
+
+    def get_form_kwargs(self):
+        kwargs = super(BaseActivityCreateView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+    def get_success_url(self):
+        return self.success_url
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.rep = self.request.user.rep
+        #obj.rep = Rep.objects.get(user=self.request.user)
+        obj.save()
+        messages.success(self.request, self.success_msg)
+        return super(BaseActivityCreateView, self).form_valid(form)
