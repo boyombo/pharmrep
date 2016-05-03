@@ -24,15 +24,15 @@
             <table class="table table-striped table-responsive">
                 <thead>
                     <tr>
-                        <th>Text</th>
                         <th>Date</th>
+                        <th>Text</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for need in needs %}
+                {% for need in marketneed_list %}
                   <tr>
-                      <td>{{ need.text }}</td>
                       <td>{{ need.recorded_date }}</td>
+                      <td>{{ need.text|linebreaks }}</td>
                 {% endfor %}
                 </tbody>
             </table>

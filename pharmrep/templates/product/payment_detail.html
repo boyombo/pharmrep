@@ -39,10 +39,10 @@
                   <tr><td>Payment Date</td><td>{{ payment.payment_date }}</td></tr>
                   <tr><td>Balance</td><td>{{ payment.balance|intcomma }}</td></tr>
                   <tr><td>Bank of Payment</td><td>{{ payment.bank_of_payment }}</td></tr>
-                  <tr><td>Mode of Payment</td><td>{{ payment.mode_of_payment }}</td></tr>
-                  <tr><td>Teller #</td><td>{{ payment.teller_number }}</td></tr>
-                  <tr><td>Teller Date</td><td>{{ payment.teller_date }}</td></tr>
-                  <tr><td>Cheque Date</td><td>{{ payment.cheque_date }}</td></tr>
+                  <tr><td>Mode of Payment</td><td>{{ payment.get_mode_of_payment_display }}</td></tr>
+                  <tr><td>Teller #</td><td>{{ payment.teller_number|default:"N/A" }}</td></tr>
+                  <tr><td>Teller Date</td><td>{{ payment.teller_date|default:"N/A" }}</td></tr>
+                  <tr><td>Cheque Date</td><td>{{ payment.cheque_date|default:"N/A" }}</td></tr>
                   <tr><td>Remarks</td><td>{{ payment.remarks|linebreaks }}</td></tr>
                 </tbody>
             </table>

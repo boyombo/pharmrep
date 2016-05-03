@@ -23,15 +23,15 @@
             <table class="table table-striped table-responsive">
                 <thead>
                     <tr>
-                        <th>Text</th>
                         <th>Date</th>
+                        <th>Text</th>
                     </tr>
                 </thead>
                 <tbody>
-                {% for conclusion in conclusions %}
+                {% for conclusion in conclusion_list %}
                   <tr>
-                      <td>{{ conclusion.text }}</td>
                       <td>{{ conclusion.recorded_date }}</td>
+                      <td>{{ conclusion.text|linebreaks }}</td>
                 {% endfor %}
                 </tbody>
             </table>
