@@ -1,22 +1,9 @@
-{% extends "product/sale.html" %}
+{% extends "list_base.html" %}
 
-{% block start %}
-    <section class="headline-sec">
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}             </li>
-        {% endfor %}
-    </ul>
-        {% endif %}
-        <div class="overlay ">
+
             {% block pageheader %}
             <h3 >INVOICE LIST <i class="fa fa-angle-double-right "></i></h3>
             {% endblock pageheader %}
-
-        </div>
-    </section>
-{% endblock start %}
 
                 {% block sidenav %}
                 <a class="list-group-item" href="{% url 'product_invoice' %}">New Invoice</a>
@@ -48,3 +35,9 @@
                 </tbody>
             </table>
             {% endblock content %}
+    {% block menu_select %}
+    <script type="text/javascript">
+        $('.active-menu-item').removeAttr('class','active-menu-item');
+        $('#batch-menu').attr('class','active-menu-item');
+    </script>
+    {% endblock menu_select %}

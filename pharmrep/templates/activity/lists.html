@@ -1,0 +1,40 @@
+{% extends "list_base.html" %}
+{% load static from staticfiles %}
+
+    {% block pageheader %}
+    <h3 >Call<i class="fa fa-angle-double-right "></i></h3>
+    {% endblock pageheader %}
+
+
+{% block sidenav %}
+{% block call_nav %}
+ <a id="govt-submenu" class="list-group-item" href="{% url 'govt_call' %}">Govt Hospital Call</a>
+ <a id="private-submenu" class="list-group-item" href="{% url 'private_call' %}">Private Hospital Call</a>
+ <a id="trade-submenu" class="list-group-item" href="{% url 'trade_call' %}">Trade Call</a>
+ <a id="competitor-submenu" class="list-group-item" href="{% url 'competition' %}">Competitor Activity</a>
+ <a id="contact-submenu" class="list-group-item" href="{% url 'contact' %}">New Contact</a>
+ <a id="market-submenu" class="list-group-item" href="{% url 'market' %}">Market Need</a>
+ <a id="conclusion-submenu" class="list-group-item" href="{% url 'conclusion' %}">Conclusion</a>
+ <a id="itinerary-submenu" class="list-group-item" href="{% url 'itinerary' %}">Itinerary</a>
+ <a id="summary-submenu" class="list-group-item" href="{% url 'summary' %}">Summary</a>
+{% endblock call_nav %}
+                <ul class="list-group">
+ <a id="calllist-submenu" class="list-group-item" href="{% url 'call_list' %}">Calls List</a>
+ <a id="competitorlist-submenu" class="list-group-item" href="{% url 'competition_list' %}">Competitor Activity List</a>
+ <a id="contactlist-submenu" class="list-group-item" href="{% url 'contact_list' %}">Contact List</a>
+ <a id="marketlist-submenu" class="list-group-item" href="{% url 'market_list' %}">Market List</a>
+ <a id="conclusionlist-submenu" class="list-group-item" href="{% url 'conclusion_list' %}">Conclusion List</a>
+ <a id="itinerarylist-submenu" class="list-group-item" href="{% url 'itinerary_list' %}">Itinerary List</a>
+ <a id="summarylist-submenu" class="list-group-item" href="{% url 'summary_list' %}">Summary List</a>
+            </ul>
+{% endblock sidenav %}
+
+{% block content %}
+{% endblock content %}
+
+    {% block menu_select %}
+    <script type="text/javascript">
+        $('.active-menu-item').removeAttr('class','active-menu-item');
+        $('#call-menu').attr('class','active-menu-item');
+    </script>
+    {% endblock menu_select %}

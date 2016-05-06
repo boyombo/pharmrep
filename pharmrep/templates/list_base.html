@@ -1,0 +1,79 @@
+{% extends "plain.html" %}
+{% load static from staticfiles %}
+
+    <h3 >
+        {% block pageheader %}
+        Sale ( {{ invoice.invoice_no }})
+        {% endblock pageheader %}
+        <i class="fa fa-angle-double-right "></i>
+    </h3>
+
+{% block extra-css %}
+<link href="{% static 'css/datepicker.css' %}" rel="stylesheet" type="text/css" />
+{% endblock extra-css %}
+
+    {% block middle %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="list-group">
+                {% block sidenav %}
+                <a class="list-group-item active" href="{% url 'product_invoice' %}">New Invoice</a>
+                <a class="list-group-item" href="{% url 'invoice_list' %}">View Invoices</a>
+                {% endblock sidenav %}
+            </ul>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form method="get" action="">
+                            <div class="col-md-4">
+                                Start: {{ form.start }}
+                            </div>
+                            <div class="col-md-4">
+                                End: {{ form.end }}
+                            </div>
+                            <div class="col-md-2">
+                                Rep: {{ form.rep }}
+                            </div>
+                            <div class="col-md-2">
+                                Find: <input type="submit" class="btn btn-primary"  value="Search" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% block content %}
+                {% endblock content %}
+            </div>
+            <!--div class="col-md-1"></div-->
+        </div>
+    </div>
+    {% endblock middle %}
+
+    {% block extra-js %}
+    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script type="text/javascript">
+        $('#id_start').attr('class','form-control');
+        $('#id_end').attr('class','form-control');
+        $('#id_rep').attr('class','form-control');
+
+        // Set active menu to batch
+        $('.active-menu-item').removeAttr('class','active-menu-item');
+        $('#batch-menu').attr('class','active-menu-item');
+
+        // Date picker
+
+        $('#id_start').datepicker({'format': 'yyyy-mm-dd'})
+            .on('changeDate', function(e) {
+                $(this).datepicker('hide');
+            });
+
+        $('#id_end').datepicker({'format': 'yyyy-mm-dd'})
+            .on('changeDate', function(e) {
+                $(this).datepicker('hide');
+            });
+    </script>
+
+    {% block menu_select %}
+    {% endblock menu_select %}
+    {% endblock extra-js %}

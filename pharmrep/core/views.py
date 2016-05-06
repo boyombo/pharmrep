@@ -4,15 +4,45 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+#from product.models import Rep
+from core.forms import SearchForm
+
 
 @method_decorator(login_required, name='dispatch')
 class BaseActivityListView(ListView):
     model = None
     order_by = '-recorded_date'
 
+    def get_context_data(self, **kwargs):
+        context = super(BaseActivityListView, self).get_context_data(**kwargs)
+        form = SearchForm(self.request.user.rep, self.request.GET)
+        context.update({'form': form})
+        return context
+
     def get_queryset(self):
         params = {}
-        if self.request.user.rep:
+        #import pdb;pdb.set_trace()
+        form = SearchForm(self.request.user.rep, self.request.GET)
+        if form.is_valid():
+            start = form.cleaned_data['start']
+            end = form.cleaned_data['end']
+            rep = form.cleaned_data['rep']
+
+            date_fld = self.order_by
+            if date_fld[0] == '-':
+                date_fld = date_fld[1:]
+
+            #params.update({'{}__range'.format(date_fld): (start, end)})
+            if start:
+                params.update({'{}__gte'.format(date_fld): start})
+            if end:
+                params.update({'{}__lte'.format(date_fld): end})
+            if rep:
+                params.update({'rep': rep})
+        else:
+            #subordinates = [r for r in Rep.objects.filter(supervisor=rep)]
+            #all_reps = [rep] + subordinates
+            #params.update({'rep__in': all_reps})
             params.update({'rep': self.request.user.rep})
         return self.model.objects.filter(**params).order_by(self.order_by)
 
