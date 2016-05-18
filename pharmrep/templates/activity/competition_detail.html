@@ -1,0 +1,29 @@
+{% extends "activity/competition_list.html" %}
+{% load humanize %}
+
+            {% block pageheader %}
+            <h3 >COMPETITION ACTIVITY DETAIL <i class="fa fa-angle-double-right "></i></h3>
+            {% endblock pageheader %}
+
+            {% block searchform %}
+            {% endblock searchform %}
+
+            {% block content %}
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Rep</th>
+                        <th>{{ entry.rep }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Product</td><td>{{ entry.product }}</td></tr>
+                  <tr><td>Company</td><td>{{ entry.competing_company }}</td></tr>
+                  <tr><td>Competing Product</td><td>{{ entry.competing_product }}</td></tr>
+                  <tr><td>Activity</td><td>{{ entry.activity|linebreaks }}</td></tr>
+                  <tr><td>Expected Effect</td><td>{{ entry.expected_effect|linebreaks }}</td></tr>
+                  <tr><td>Suggestion</td><td>{{ entry.suggestion|linebreaks }}</td></tr>
+                  <tr><td>Entered On</td><td>{{ entry.recorded_date }}</td></tr>
+                </tbody>
+            </table>
+            {% endblock content %}

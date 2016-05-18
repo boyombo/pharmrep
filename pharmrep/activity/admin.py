@@ -5,8 +5,8 @@ from activity import models as activity
 
 @admin.register(activity.Call)
 class CallAdmin(admin.ModelAdmin):
-    list_display = ['rep', 'customer', 'contact', 'products_detailed',
-                    'order_value', 'call_type', 'call_date']
+    list_display = ['rep', 'customer', 'contact', 'position',
+                    'call_type', 'call_date', 'next_meeting']
     list_filter = ['call_type']
     search_fields = ['rep__name']
 

@@ -16,6 +16,7 @@
                         <th>Products</th>
                         <th>Value</th>
                         <th>Date</th>
+                        <th>detail</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +30,7 @@
                       <td>{{ call.products_detailed }}</td>
                       <td>{{ call.order_value }}</td>
                       <td>{{ call.call_date }}</td>
+                      <td><a href="{% url 'call_detail' call.id %}">details</a></td>
                 {% endfor %}
                 </tbody>
             </table>

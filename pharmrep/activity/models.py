@@ -17,15 +17,25 @@ class Call(models.Model):
     contact = models.CharField(max_length=200)
     position = models.CharField(max_length=200, blank=True)
     address = models.TextField(blank=True)
-    products_detailed = models.TextField(blank=True)
-    order_value = models.IntegerField(default=0)
+    #products_detailed = models.TextField(blank=True)
+    #order_value = models.IntegerField(default=0)
     remarks = models.TextField(blank=True)
     call_type = models.PositiveIntegerField(choices=CALL_TYPES)
     call_date = models.DateField()
+    next_meeting = models.DateField(null=True, blank=True)
     recorded_date = models.DateTimeField(default=datetime.now)
 
     def __unicode__(self):
         return self.contact
+
+
+class ProductDetail(models.Model):
+    call = models.ForeignKey(Call)
+    product = models.ForeignKey(Product)
+    order_value = models.PositiveIntegerField()
+
+    def __unicode__(self):
+        return self.product
 
 
 class Competition(models.Model):

@@ -10,9 +10,15 @@ urlpatterns = [
     url(r'private/$', views.PrivateCallView.as_view(), name='private_call'),
     url(r'trade/$', views.TradeCallView.as_view(), name='trade_call'),
     url(r'call_list/$', views.CallListView.as_view(), name='call_list'),
+    url(r'call_detail/(?P<call_id>\d+)/$',
+        views.call_detail, name='call_detail'),
+
     url(r'competition/$', views.CompetitionView.as_view(), name='competition'),
     url(r'competitionlist/$', views.CompetitionListView.as_view(),
         name='competition_list'),
+    url(r'competition_detail/(?P<entry_id>\d+)/$',
+        views.competition_detail, name='competition_detail'),
+
     url(r'contact/$', views.ContactView.as_view(), name='contact'),
     url(r'contactlist/$', views.ContactListView.as_view(),
         name='contact_list'),

@@ -14,6 +14,7 @@
                         <th>Company</th>
                         <th>Competing Product</th>
                         <th>Date</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,6 +25,7 @@
                       <td>{{ act.competing_company }}</td>
                       <td>{{ act.competing_product }}</td>
                       <td>{{ act.recorded_date }}</td>
+                      <td><a href="{% url 'competition_detail' act.id %}">details</a></td>
                 {% endfor %}
                 </tbody>
             </table>

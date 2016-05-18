@@ -45,6 +45,11 @@ class CallListView(BaseActivityListView):
     order_by = '-call_date'
 
 
+def call_detail(request, call_id):
+    call = activity_models.Call.objects.get(id=call_id)
+    return render(request, 'activity/call_detail.html', {'call': call})
+
+
 class CompetitionView(BaseActivityCreateView):
     template_name = 'activity/competition.html'
     form_class = activity_forms.CompetitionForm
@@ -54,6 +59,12 @@ class CompetitionView(BaseActivityCreateView):
 
 class CompetitionListView(BaseActivityListView):
     model = activity_models.Competition
+
+
+def competition_detail(request, entry_id):
+    entry = activity_models.Competition.objects.get(id=entry_id)
+    return render(request,
+                  'activity/competition_detail.html', {'entry': entry})
 
 
 class ContactView(BaseActivityCreateView):
