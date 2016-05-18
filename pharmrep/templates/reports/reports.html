@@ -1,20 +1,11 @@
-{% extends "plain.html" %}
+{% extends "list_base.html" %}
 {% load static from staticfiles %}
 
     {% block pageheader %}
     <h3 >Reports<i class="fa fa-angle-double-right "></i></h3>
     {% endblock pageheader %}
 
-{% block extra-css %}
-<link href="{% static 'css/datepicker.css' %}" rel="stylesheet" type="text/css" />
-{% endblock extra-css %}
-
-    {% block middle %}
-    <div class="container">
-        <div class="row">
-                {% block leftpane %}
-            <div class="col-md-3">
-                <ul class="list-group">
+{% block sidenav %}
 {% block call_nav %}
  <a id="balance-submenu" class="list-group-item" href="{% url 'report_balance' %}">Outstanding Balance</a>
  <a id="performance-submenu" class="list-group-item" href="{% url 'report_performance' %}">Product Performance</a>
@@ -26,8 +17,8 @@
  <a id="paymentchart-submenu" class="list-group-item" href="{% url 'chart_payment' %}">Collections Chart</a>
  <a id="callchart-submenu" class="list-group-item" href="{% url 'chart_call' %}">Calls Chart</a>
             </ul>
-            </div>
-            {% endblock leftpane %}
+{% endblock sidenav %}
+
                 {% block content %}
             <div class="col-md-6">
                 <form method='post' role='form' class='form-horizontal' action=''>{% csrf_token %}
@@ -63,28 +54,10 @@
             <div class="col-md-3">
             </div>
                 {% endblock rightpane %}
-        </div>
-    </div>
-    {% endblock middle %}
 
-    {% block extra-js %}
-    <script type="text/javascript" src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    {% block menu_select %}
     <script type="text/javascript">
-        $('#id_customer').attr('class','form-control');
-        $('#id_contact').attr('class','form-control');
-        $('#id_position').attr('class','form-control');
-        $('#id_address').attr('class','form-control');
-        $('#id_products_detailed').attr('class','form-control');
-        $('#id_call_type').attr('class','form-control');
-        $('#id_call_date').attr('class','form-control');
-
-        // Set active menu to batch
         $('.active-menu-item').removeAttr('class','active-menu-item');
         $('#reports-menu').attr('class','active-menu-item');
-        
-        // Datepicker
-        $('#id_call_date').datepicker({'format': 'yyyy-mm-dd'});
     </script>
-
-    {% block submenu-js %}{% endblock submenu-js %}
-    {% endblock extra-js %}
+    {% endblock menu_select %}

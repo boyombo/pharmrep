@@ -7,10 +7,12 @@
 <script type="text/javascript">
 $('.list-group-item').removeClass('active');
 $('#competitor-submenu').addClass('active');
-// Datepicker
-$('#id_recorded_date').datepicker({'format': 'yyyy-mm-dd'})
-    .on('changeDate', function(e) {
-        $(this).datepicker('hide');
-    });
+
+$('#id_product').addClass('form-control');
+$('#id_competing_company').addClass('form-control');
+$('#id_competing_product').addClass('form-control');
+$('#id_expected_effect').addClass('form-control');
+$('#id_suggestion').addClass('form-control');
+$('#id_activity').addClass('form-control');
 </script>
 {% endblock submenu-js %}

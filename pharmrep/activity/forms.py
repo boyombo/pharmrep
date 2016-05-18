@@ -63,7 +63,7 @@ class TradeCallForm(CallForm):
 class CompetitionForm(BaseActivityForm):
     class Meta:
         model = activity_models.Competition
-        fields = ['activity', 'recorded_date']
+        exclude = ['recorded_date', 'rep']
 
 
 class ContactForm(BaseActivityForm):

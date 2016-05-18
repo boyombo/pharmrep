@@ -3,7 +3,7 @@ from datetime import datetime, date
 
 from django.db import models
 from django.db.models.aggregates import Sum
-from product.models import Customer, Rep, Sale, Payment
+from product.models import Customer, Rep, Sale, Payment, Product
 
 
 class Call(models.Model):
@@ -30,7 +30,12 @@ class Call(models.Model):
 
 class Competition(models.Model):
     rep = models.ForeignKey(Rep)
-    activity = models.TextField()
+    product = models.ForeignKey(Product, null=True, blank=True)
+    competing_company = models.CharField(max_length=200, blank=True)
+    competing_product = models.CharField(max_length=200, blank=True)
+    activity = models.TextField(blank=True)
+    expected_effect = models.TextField(blank=True)
+    suggestion = models.TextField(blank=True)
     recorded_date = models.DateField(default=date.today)
 
     def __unicode__(self):

@@ -13,7 +13,8 @@ class CallAdmin(admin.ModelAdmin):
 
 @admin.register(activity.Competition)
 class CompetitionAdmin(admin.ModelAdmin):
-    list_display = ['rep', 'activity', 'recorded_date']
+    list_display = ['rep', 'product', 'competing_company',
+                    'competing_product', 'recorded_date']
     search_fields = ['rep__name']
 
 

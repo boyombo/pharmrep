@@ -2,6 +2,7 @@ from django.shortcuts import render
 #from django.db.models.aggregates import Sum
 
 from product.models import Customer, Product, Payment
+from core.views import BaseActivityListView
 
 
 def balance(request):
@@ -22,6 +23,12 @@ def performance(request):
     #    Sum('product_sales__quantity'), Sum('product_sales__amount'))
     return render(request, 'reports/performance.html',
                   {'products': Product.objects.all()})
+
+
+class CollectionListView(BaseActivityListView):
+    model = Payment
+    order_by = '-receipt_date'
+    template_name = 'reports/collection.html'
 
 
 def collection(request):
