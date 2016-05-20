@@ -11,13 +11,16 @@
  <a id="performance-submenu" class="list-group-item" href="{% url 'report_performance' %}">Product Performance</a>
  <a id="collection-submenu" class="list-group-item" href="{% url 'report_collection' %}">Collection Analysis</a>
  <a id="last-submenu" class="list-group-item" href="{% url 'last_activity' %}">Last Activity</a>
+ <a id="last-submenu" class="list-group-item" href="{% url 'forum-index' %}">Forum</a>
 {% endblock call_nav %}
             </ul>
+            {% comment %}
                 <ul class="list-group">
  <a id="saleschart-submenu" class="list-group-item" href="{% url 'chart_sales' %}">Sales Chart</a>
  <a id="paymentchart-submenu" class="list-group-item" href="{% url 'chart_payment' %}">Collections Chart</a>
  <a id="callchart-submenu" class="list-group-item" href="{% url 'chart_call' %}">Calls Chart</a>
             </ul>
+            {% endcomment %}
 {% endblock sidenav %}
 
                 {% block content %}

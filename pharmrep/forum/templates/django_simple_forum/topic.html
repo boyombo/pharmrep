@@ -1,0 +1,43 @@
+{% extends "reports/reports.html" %}
+            {% block pageheader %}
+            <h3 >TOPIC <i class="fa fa-angle-double-right "></i></h3>
+            {% endblock pageheader %}
+
+    {% block searchform %}
+    {% endblock searchform %}
+
+{% block content %}
+<h4>{{ topic.title }}</h4>
+<div class="panel-group">
+
+    {% for post in posts.object_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ post.title }}</div>
+            <div class="panel-body">
+                by <kbd>{{ post.creator|title }}</kbd> | <span class="date">{{ post.created }}</span> <br /><br />
+            {{ post.body }}
+            </div> 
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Next/Prev page links  -->
+{% if posts.object_list and posts.paginator.num_pages > 1 %}
+<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href= "?page={{ posts.previous_page_number }}">previous &lt;&lt; </a>
+        {% endif %}
+
+        <span class="current">
+            &nbsp;Page {{ posts.number }} of {{ topics.paginator.num_pages }}
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}"> &gt;&gt; next</a>
+        {% endif %}
+    </span>
+</div>
+{% endif %}
+<a class="button" href="{% url 'reply' pk %}">Reply</a>
+{% endblock content %}

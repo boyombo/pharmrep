@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'product/', include('product.urls')),
     url(r'activity/', include('activity.urls')),
     url(r'reports/', include('reports.urls')),
+    url(r'forum/', include('forum.urls')),
 ]
 
 urlpatterns += [

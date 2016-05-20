@@ -1,0 +1,35 @@
+{% extends "reports/reports.html" %}
+            {% block pageheader %}
+            <h3 >RESPOND TO {{ topic.title }}<i class="fa fa-angle-double-right "></i></h3>
+            {% endblock pageheader %}
+
+    {% block searchform %}
+    {% endblock searchform %}
+
+
+{% block content %}
+<form action="{% url 'reply' topic.id %}" method="POST">
+    {% csrf_token %} 
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% for fld in form %}
+                      <div class="form-group">
+                          {% if fld.errors %}
+                            <div class="alert alert-danger">
+                                {{ fld.errors }}
+                            </div>
+                          {% endif %}
+                          <label for="{{ fld.id_for_label }}" class="col-sm-4 control-label">{{ fld.label }}</label>
+                          <div class="col-sm-8">
+                          {{ fld }}
+                      </div>
+                      </div>
+                    {% endfor %}
+    <input type="submit" value="Submit" class="btn btn-primary btn-lg" />
+</form>
+{% endblock content %}

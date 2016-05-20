@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'activity.apps.ActivityConfig',
     'reports.apps.ReportsConfig',
+    'forum.apps.ForumConfig',
     'django.contrib.humanize',
 ]
 

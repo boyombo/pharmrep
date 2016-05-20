@@ -1,0 +1,33 @@
+{% extends "reports/reports.html" %}
+
+            {% block pageheader %}
+            <h3 >FORUMS <i class="fa fa-angle-double-right "></i></h3>
+            {% endblock pageheader %}
+<!-- Forums  -->
+    {% block searchform %}
+    {% endblock searchform %}
+{% block content %}
+<div class="col-md-12">
+    <table class="table table-responsive table-striped">
+        <tr>
+            <td></td>
+            <td>Posts</td>
+            <td>Last post</td>
+            <td></td>
+        </tr>
+        {% for forum in forums %}
+            <tr>
+                <td {% if forloop.last %}class="last"{% endif %}>
+                    <div class="title"> <a href="{% url 'forum-detail' forum.pk %}">{{ forum.title }}</a></div>
+                </td>
+                <td {% if forloop.last %}class="last"{% endif %}>{{ forum.num_posts }}</td>
+                <td {% if forloop.last %}class="last"{% endif %}>
+                    {{ forum.last_post.short|linebreaksbr }}</td>
+                <td {% if forloop.last %}class="last"{% endif %}>
+                    <a class="button" href="{% url 'forum-detail' forum.pk %}">VIEW</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}

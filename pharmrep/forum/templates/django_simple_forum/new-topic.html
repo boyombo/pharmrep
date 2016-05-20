@@ -1,0 +1,49 @@
+{% extends "reports/reports.html" %}
+
+            {% block pageheader %}
+            <h3 >NEW TOPIC <i class="fa fa-angle-double-right "></i></h3>
+            {% endblock pageheader %}
+
+    {% block searchform %}
+    {% endblock searchform %}
+
+{% block content %}
+<form action="{% url 'new-topic' forum.id %}" method="POST">
+    {% csrf_token %} 
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% for fld in form %}
+                      <div class="form-group">
+                          {% if fld.errors %}
+                            <div class="alert alert-danger">
+                                {{ fld.errors }}
+                            </div>
+                          {% endif %}
+                          <label for="{{ fld.id_for_label }}" class="col-sm-4 control-label">{{ fld.label }}</label>
+                          <div class="col-sm-8">
+                          {{ fld }}
+                      </div>
+                      </div>
+                    {% endfor %}
+    <input type="submit" value="Submit" class="btn btn-primary btn-lg" />
+</form>
+{% endblock content %}
+
+    {% block extra-js %}
+    <script type="text/javascript">
+        //$('#id_title').attr('class','form-control');
+        //$('#id_description').attr('class','form-control');
+
+        // Set active menu to batch
+        $('.active-menu-item').removeAttr('class','active-menu-item');
+        $('#call-menu').attr('class','active-menu-item');
+        
+    </script>
+
+    {% block submenu-js %}{% endblock submenu-js %}
+    {% endblock extra-js %}
