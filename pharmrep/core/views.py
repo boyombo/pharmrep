@@ -6,6 +6,7 @@ from django.contrib import messages
 
 #from product.models import Rep
 from core.forms import SearchForm
+from core.decorators import last_activity
 
 
 @method_decorator(login_required, name='dispatch')
@@ -52,6 +53,7 @@ class BaseActivityListView(ListView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(last_activity, name='dispatch')
 class BaseActivityCreateView(CreateView):
     model = None
     success_msg = None

@@ -1,0 +1,50 @@
+{% extends "reports/reports.html" %}
+{% load humanize %}
+
+{% block start %}
+    <section class="headline-sec">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}             </li>
+        {% endfor %}
+    </ul>
+        {% endif %}
+        <div class="overlay ">
+            {% block pageheader %}
+            <h3 >LAST ACTIVITY <i class="fa fa-angle-double-right "></i></h3>
+            {% endblock pageheader %}
+
+        </div>
+    </section>
+{% endblock start %}
+    {% block searchform %}
+    {% endblock searchform %}
+
+        {% block content %}
+        <div class="col-md-12">
+            <table class="table table-responsive table-bordered">
+                <thead>
+                    <tr>
+                        <th>Representative</th>
+                        <th>Last Activity</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for rep in reps %}
+                <tr class="{% if rep.is_old %}bg-danger{% endif %}">
+                      <td>{{ rep.name }}</td>
+                      <td>{{ rep.last_activity|default:"N/A" }}</td>
+                      <td>{{ rep.last_activity|timesince|default:"N/A" }}</td>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endblock content %}
+{% block submenu-js %}
+<script type="text/javascript">
+$('.list-group-item').removeClass('active');
+$('#last-submenu').addClass('active');
+</script>
+{% endblock submenu-js %}

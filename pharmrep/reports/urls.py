@@ -7,7 +7,7 @@ from reports import views
 urlpatterns = [
     url(r'balance/$', views.balance, name='report_balance'),
     url(r'performance/$', views.performance, name='report_performance'),
-    #url(r'collection/$', views.collection, name='report_collection'),
+    url(r'last_activity/$', views.last_activity, name='last_activity'),
     url(r'collection/$', views.CollectionListView.as_view(),
         name='report_collection'),
     url(r'saleschart/$', TemplateView.as_view(

@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
-from datetime import datetime
+from datetime import datetime, date
 
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.aggregates import Sum
+
+AGE_LIMIT = 7  # 7 days age limit
 
 
 class PriceTemplate(models.Model):
@@ -56,9 +58,18 @@ class Rep(models.Model):
     name = models.CharField(max_length=200)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     supervisor = models.ForeignKey('Rep', null=True, blank=True)
+    last_activity = models.DateTimeField(blank=True, null=True)
 
     def __unicode__(self):
         return self.name
+
+    @property
+    def is_old(self):
+        if not self.last_activity:
+            return True
+        if (date.today() - self.last_activity.date()) <= AGE_LIMIT:
+            return False
+        return True
 
 
 class Customer(models.Model):

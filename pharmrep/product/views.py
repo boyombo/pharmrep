@@ -7,9 +7,11 @@ from django.contrib import messages
 from product.forms import SaleForm, PaymentForm, InvoiceForm
 from product.models import Sale, Payment, Invoice
 from core.views import BaseActivityListView as BaseListView
+from core.decorators import last_activity
 
 
 @login_required
+@last_activity
 def invoice(request):
     if request.method == 'POST':
         form = InvoiceForm(request.user, request.POST)
@@ -60,6 +62,7 @@ def invoice_detail(request, invoice_id):
 
 
 @login_required
+@last_activity
 def payment(request):
     rep = request.user.rep
     if not rep:

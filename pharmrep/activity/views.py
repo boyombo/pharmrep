@@ -10,6 +10,7 @@ from core.views import BaseActivityCreateView, BaseActivityListView
 from product.models import Sale, Payment
 #from activity.models import Call, Competition, Contact, MarketNeed, Conclusion
 from activity import models as activity_models
+from core.decorators import last_activity
 
 
 #@method_decorator(login_required, name='dispatch')
@@ -57,6 +58,8 @@ def call_detail(request, call_id):
     return render(request, 'activity/call_detail.html', {'call': call})
 
 
+@login_required
+@last_activity
 def product_detailed(request, call_id):
     call = activity_models.Call.objects.get(id=call_id)
     detailed = activity_models.ProductDetail.objects.filter(call=call)
@@ -74,6 +77,8 @@ def product_detailed(request, call_id):
         'form': form, 'call': call, 'detail_list': detailed})
 
 
+@login_required
+@last_activity
 def remove_order(request, detail_id):
     detail = activity_models.ProductDetail.objects.get(pk=detail_id)
     call = detail.call
@@ -134,6 +139,7 @@ class ConclusionListView(BaseActivityListView):
 
 
 @login_required
+@last_activity
 def edit_itinerary(request, item_id):
     itinerary = activity_models.Itinerary.objects.get(id=item_id)
     if request.method == 'POST':
@@ -149,6 +155,7 @@ def edit_itinerary(request, item_id):
 
 
 @login_required
+@last_activity
 def itinerary(request):
     rep = request.user.rep
     ItineraryFormset = modelformset_factory(

@@ -1,8 +1,13 @@
 from django.shortcuts import render
 #from django.db.models.aggregates import Sum
 
-from product.models import Customer, Product, Payment
+from product.models import Customer, Product, Payment, Rep
 from core.views import BaseActivityListView
+
+
+def last_activity(request):
+    return render(request, 'reports/last_activity.html',
+                  {'reps': Rep.objects.all()})
 
 
 def balance(request):
