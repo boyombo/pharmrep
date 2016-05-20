@@ -28,9 +28,14 @@ class Call(models.Model):
     def __unicode__(self):
         return self.contact
 
+    @property
+    def order_value(self):
+        return self.call_products.aggregate(
+            Sum('order_value'))['order_value__sum'] or 0
+
 
 class ProductDetail(models.Model):
-    call = models.ForeignKey(Call)
+    call = models.ForeignKey(Call, related_name='call_products')
     product = models.ForeignKey(Product)
     order_value = models.PositiveIntegerField()
 

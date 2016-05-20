@@ -84,9 +84,10 @@
         $('#id_contact').attr('class','form-control');
         $('#id_position').attr('class','form-control');
         $('#id_address').attr('class','form-control');
-        $('#id_products_detailed').attr('class','form-control');
+        $('#id_remarks').attr('class','form-control');
         $('#id_call_type').attr('class','form-control');
         $('#id_call_date').attr('class','form-control');
+        $('#id_next_meeting').attr('class','form-control');
 
         // Set active menu to batch
         $('.active-menu-item').removeAttr('class','active-menu-item');
@@ -94,6 +95,10 @@
         
         // Datepicker
         $('#id_call_date').datepicker({'format': 'yyyy-mm-dd'})
+            .on('changeDate', function(e) {
+                $(this).datepicker('hide');
+            });
+        $('#id_next_meeting').datepicker({'format': 'yyyy-mm-dd'})
             .on('changeDate', function(e) {
                 $(this).datepicker('hide');
             });

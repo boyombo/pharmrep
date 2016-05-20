@@ -1,0 +1,88 @@
+{% extends "activity/lists.html" %}
+
+            {% block pageheader %}
+            <h3 >PRODUCTS DETAILED <i class="fa fa-angle-double-right "></i></h3>
+            {% endblock pageheader %}
+
+                {% block searchform %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form method="post" action="">{% csrf_token %}
+                            <div class="form-group">
+                                {% if form.product.errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.product.errors }}
+                                </div>
+                                {% endif %}
+                                <label for="id_product" class="col-sm-4 control-label">Product</label>
+                                <div class="col-sm-8">
+                                {{ form.product }}
+                            </div>
+                        </div>
+                            <div class="form-group">
+                                {% if form.order_value.errors %}
+                                <div class="alert alert-danger">
+                                    {{ form.order_value.errors }}
+                                </div>
+                                {% endif %}
+                                <div class="col-sm-8">
+                                {{ form.order_value }}
+                            </div>
+                        </div>
+                            <div class="col-md-8">
+                                <input type="submit" class="btn btn-primary"  value="Add" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% endblock searchform %}
+
+        {% block content %}
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>{{ call.customer }}</th>
+                    </tr>
+                    <tr>
+                        <td>Call Type</td>
+                        <td>{{ call.get_call_type_display }}</td>
+                    </tr>
+                    <tr>
+                        <td>Call Date</td>
+                        <td>{{ call.call_date }}</td>
+                    </tr>
+                    <tr>
+                        <td>Order Value</td>
+                        <td>{{ call.order_value }}</td>
+                    </tr>
+                </thead>
+            </table>
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>Products</th>
+                        <th>Order Value</th>
+                        <th>remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for detail in detail_list %}
+                  <tr>
+                    <td>{{ detail.product }}</td>
+                    <td>{{ detail.order_value }}</td>
+                    <td><a href="{% url 'remove_order' detail.id %}">remove</a></td>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endblock content %}
+
+{% block menu_select %}
+<script type="text/javascript">
+$('#iid_product').addClass('form-control');
+$('#id_order_value').attr('placeholder', 'Order Value');
+
+$('.list-group-item').removeClass('active');
+$('#calllist-submenu').addClass('active');
+</script>
+{% endblock menu_select %}

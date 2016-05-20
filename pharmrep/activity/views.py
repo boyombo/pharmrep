@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models.aggregates import Sum
@@ -15,7 +15,8 @@ from activity import models as activity_models
 class CallView(BaseActivityCreateView):
     model = activity_models.Call
     success_msg = 'Successfully added call'
-    success_url = '/activity/govt/'
+    #success_url = '/activity/govt/'
+    success_url = '/activity/products/%(id)s'
 
     def form_valid(self, form):
         messages.success(self.request, self.success_msg)
@@ -25,19 +26,24 @@ class CallView(BaseActivityCreateView):
 class GovtCallView(CallView):
     template_name = 'activity/govt.html'
     form_class = activity_forms.GovtCallForm
-    success_url = '/activity/govt/'
+
+    #def get_success_url(self):
+    #    #import pdb;pdb.set_trace()
+    #    return '/activity/products/{id}/'.format(self.object.id)
+    #success_url = '/activity/products/%(id)s'
+    # success_url = '/activity/govt/'
 
 
 class PrivateCallView(CallView):
     template_name = 'activity/private.html'
     form_class = activity_forms.PrivateCallForm
-    success_url = '/activity/private/'
+    #success_url = '/activity/private/'
 
 
 class TradeCallView(CallView):
     template_name = 'activity/trade.html'
     form_class = activity_forms.TradeCallForm
-    success_url = '/activity/trade/'
+    #success_url = '/activity/trade/'
 
 
 class CallListView(BaseActivityListView):
@@ -48,6 +54,31 @@ class CallListView(BaseActivityListView):
 def call_detail(request, call_id):
     call = activity_models.Call.objects.get(id=call_id)
     return render(request, 'activity/call_detail.html', {'call': call})
+
+
+def product_detailed(request, call_id):
+    call = activity_models.Call.objects.get(id=call_id)
+    detailed = activity_models.ProductDetail.objects.filter(call=call)
+    if request.method == 'POST':
+        form = activity_forms.ProductDetailedForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.call = call
+            obj.save()
+            messages.info(request, "Added product detail successfully")
+            return redirect('product_detailed', call_id=call_id)
+    else:
+        form = activity_forms.ProductDetailedForm()
+    return render(request, 'activity/products_detailed.html', {
+        'form': form, 'call': call, 'detail_list': detailed})
+
+
+def remove_order(request, detail_id):
+    detail = activity_models.ProductDetail.objects.get(pk=detail_id)
+    call = detail.call
+    detail.delete()
+    messages.info(request, "Removed product detail successfully")
+    return redirect('product_detailed', call_id=call.id)
 
 
 class CompetitionView(BaseActivityCreateView):

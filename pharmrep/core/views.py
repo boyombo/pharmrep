@@ -58,13 +58,14 @@ class BaseActivityCreateView(CreateView):
         kwargs.update({'user': self.request.user})
         return kwargs
 
-    def get_success_url(self):
-        return self.success_url
+    #def get_success_url(self):
+    #    return self.success_url
 
     def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.rep = self.request.user.rep
+        #import pdb;pdb.set_trace()
+        self.object = form.save(commit=False)
+        self.object.rep = self.request.user.rep
         #obj.rep = Rep.objects.get(user=self.request.user)
-        obj.save()
+        self.object.save()
         messages.success(self.request, self.success_msg)
         return super(BaseActivityCreateView, self).form_valid(form)

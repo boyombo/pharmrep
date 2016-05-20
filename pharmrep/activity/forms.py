@@ -23,18 +23,6 @@ class CallForm(BaseActivityForm):
         model = activity_models.Call
         exclude = ['rep', 'recorded_date', 'call_type']
 
-    #def __init__(self, *args, **kwargs):
-    #    #import pdb;pdb.set_trace()
-    #    self.user = kwargs.pop('user')
-    #    super(CallForm, self).__init__(*args, **kwargs)
-
-    #def clean(self):
-    #    try:
-    #        self.rep = Rep.objects.get(user=self.user)
-    #    except Rep.DoesNotExist:
-    #        raise forms.ValidationError(
-    #            'Only reps are allowed to make calls')
-
     def get_call_type(self):
         raise NotImplementedError
 
@@ -43,6 +31,13 @@ class CallForm(BaseActivityForm):
         obj.rep = self.rep
         obj.call_type = self.get_call_type()
         obj.save()
+        return obj
+
+
+class ProductDetailedForm(forms.ModelForm):
+    class Meta:
+        model = activity_models.ProductDetail
+        fields = ['product', 'order_value']
 
 
 class GovtCallForm(CallForm):

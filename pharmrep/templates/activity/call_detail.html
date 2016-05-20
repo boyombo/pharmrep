@@ -27,4 +27,23 @@
                   <tr><td>Remarks</td><td>{{ call.remarks|linebreaks }}</td></tr>
                 </tbody>
             </table>
+
+
+            <table class="table table-striped table-responsive">
+                <caption>Products Detailed</caption>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Order Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for detail in call.call_products.all %}
+                  <tr>
+                      <td>{{ detail.product }}</td>
+                      <td>{{ detail.order_value }}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+            </table>
             {% endblock content %}

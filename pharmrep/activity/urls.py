@@ -12,6 +12,10 @@ urlpatterns = [
     url(r'call_list/$', views.CallListView.as_view(), name='call_list'),
     url(r'call_detail/(?P<call_id>\d+)/$',
         views.call_detail, name='call_detail'),
+    url(r'products/(?P<call_id>\d+)/$',
+        views.product_detailed, name='product_detailed'),
+    url(r'remove_order/(?P<detail_id>\d+)/$',
+        views.remove_order, name='remove_order'),
 
     url(r'competition/$', views.CompetitionView.as_view(), name='competition'),
     url(r'competitionlist/$', views.CompetitionListView.as_view(),
