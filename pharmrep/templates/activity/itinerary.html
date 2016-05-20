@@ -3,15 +3,59 @@
 <h3 >Itinerary<i class="fa fa-angle-double-right "></i></h3>
 {% endblock pageheader %}
 
+{% block content %}
+<div class="col-md-6">
+    <form method='post' role='form' class='form-horizontal' action=''>{% csrf_token %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{ date_form }}
+            </div>
+        <div class="panel-body">
+        {{ formset.management_form }}
+        <table class="table-responsive table table-striped">
+            <thead>
+                <tr>
+                    <th>Time slot</th>
+                    <th>Activity</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for fm in formset %}
+            {{ fm.id }}
+                <tr>
+                   <td>{{ fm.time_slot }}</td>
+                    <td class="input">{{ fm.activity }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-8">
+                        <input type="submit" value="Save" class="btn btn-primary btn-lg" />
+                    </div>
+        </div>
+    </form>
+{% endblock content %}
+
 {% block submenu-js %}
 <script type="text/javascript">
 $('.list-group-item').removeClass('active');
 $('#itinerary-submenu').addClass('active');
-
+$('.input > input').addClass('form-control');
+$('select').eq(0).val(0);
+$('select').eq(1).val(1);
+$('select').eq(2).val(2);
+$('select').eq(3).val(3);
+$('select').eq(4).val(4);
+$('select').eq(5).val(5);
+$('select').eq(6).val(6);
+$('select').eq(7).val(7);
+$('select').eq(8).val(8);
+$('select').eq(9).val(9);
 $('#id_places').attr('class','form-control');
 $('#id_recorded_date').attr('class','form-control');
 //Datepicker
-$('#id_recorded_date').datepicker({'format': 'yyyy-mm-dd'})
+$('#id_date').datepicker({'format': 'yyyy-mm-dd'})
     .on('changeDate', function(e) {
         $(this).datepicker('hide');
     });

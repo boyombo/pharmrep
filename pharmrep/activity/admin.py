@@ -32,7 +32,7 @@ class MarketAdmin(admin.ModelAdmin):
 
 @admin.register(activity.Itinerary)
 class ItineraryAdmin(admin.ModelAdmin):
-    list_display = ['rep', 'places', 'recorded_date']
+    list_display = ['rep', 'recorded_date', 'time_slot', 'activity']
     search_fields = ['rep__name']
 
 

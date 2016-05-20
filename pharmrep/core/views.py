@@ -12,6 +12,7 @@ from core.forms import SearchForm
 class BaseActivityListView(ListView):
     model = None
     order_by = '-recorded_date'
+    order_by_extra = None
 
     def get_context_data(self, **kwargs):
         context = super(BaseActivityListView, self).get_context_data(**kwargs)
@@ -44,7 +45,10 @@ class BaseActivityListView(ListView):
             #all_reps = [rep] + subordinates
             #params.update({'rep__in': all_reps})
             params.update({'rep': self.request.user.rep})
-        return self.model.objects.filter(**params).order_by(self.order_by)
+        ordering = [self.order_by]
+        if self.order_by_extra:
+            ordering.append(self.order_by_extra)
+        return self.model.objects.filter(**params).order_by(*ordering)
 
 
 @method_decorator(login_required, name='dispatch')

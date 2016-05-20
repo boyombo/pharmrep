@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models.aggregates import Sum
+from django.forms.models import modelformset_factory
 
 from activity import forms as activity_forms
 from core.views import BaseActivityCreateView, BaseActivityListView
@@ -132,6 +133,59 @@ class ConclusionListView(BaseActivityListView):
     model = activity_models.Conclusion
 
 
+@login_required
+def edit_itinerary(request, item_id):
+    itinerary = activity_models.Itinerary.objects.get(id=item_id)
+    if request.method == 'POST':
+        form = activity_forms.ItineraryForm(request.POST, instance=itinerary)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully saved itinerary')
+            return redirect('itinerary_list')
+    else:
+        form = activity_forms.ItineraryForm(instance=itinerary)
+    return render(request, 'activity/edit_itinerary.html',
+                  {'form': form, 'itinerary': itinerary})
+
+
+@login_required
+def itinerary(request):
+    rep = request.user.rep
+    ItineraryFormset = modelformset_factory(
+        activity_models.Itinerary, fields=('time_slot', 'activity'), extra=10)
+    if request.method == 'POST':
+        formset = ItineraryFormset(
+            request.POST, queryset=activity_models.Itinerary.objects.none())
+        date_form = activity_forms.DateForm(request.POST)
+        #import pdb;pdb.set_trace()
+        if formset.is_valid() and date_form.is_valid():
+            dt = date_form.cleaned_data['date']
+            instances = formset.save(commit=False)
+            for instance in instances:
+                try:
+                    obj = activity_models.Itinerary.objects.get(
+                        rep=rep,
+                        recorded_date=dt,
+                        time_slot=instance.time_slot)
+                except activity_models.Itinerary.DoesNotExist:
+                    instance.rep = rep
+                    instance.recorded_date = dt
+                    instance.save()
+                else:
+                    obj.time_slot = instance.time_slot
+                    obj.activity = instance.activity
+                    obj.save()
+
+            messages.success(request, "Successfully entered your itinerary")
+            return redirect('itinerary')
+    else:
+        formset = ItineraryFormset(
+            queryset=activity_models.Itinerary.objects.none())
+        date_form = activity_forms.DateForm()
+    return render(request, 'activity/itinerary.html',
+                  {'formset': formset, 'date_form': date_form})
+
+
 class ItineraryView(BaseActivityCreateView):
     template_name = 'activity/itinerary.html'
     form_class = activity_forms.ItineraryForm
@@ -141,6 +195,8 @@ class ItineraryView(BaseActivityCreateView):
 
 class ItineraryListView(BaseActivityListView):
     model = activity_models.Itinerary
+    order_by = 'recorded_date'
+    order_by_extra = 'time_slot'
 
 
 class SummaryView(BaseActivityCreateView):

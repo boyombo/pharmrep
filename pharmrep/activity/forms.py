@@ -79,13 +79,19 @@ class ConclusionForm(BaseActivityForm):
         fields = ['text', 'recorded_date']
 
 
-class ItineraryForm(BaseActivityForm):
+class ItineraryForm(forms.ModelForm):
+    activity = forms.CharField(widget=forms.Textarea())
+
     class Meta:
         model = activity_models.Itinerary
-        fields = ['recorded_date', 'places']
+        fields = ['activity']
 
 
 class SummaryForm(BaseActivityForm):
     class Meta:
         model = activity_models.Summary
         fields = ['start_date', 'end_date', 'report']
+
+
+class DateForm(forms.Form):
+    date = forms.DateField()

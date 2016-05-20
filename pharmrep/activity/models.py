@@ -87,15 +87,28 @@ class Conclusion(models.Model):
 
 
 class Itinerary(models.Model):
+    TIME_SLOTS = enumerate(('8am-9am', '9am-10am', '10am-11am',
+                            '11am-12noon', '12noon-1pm', '1pm-2pm', '2pm-3pm',
+                            '3pm-4pm', '4pm-5pm', 'After 5pm'))
     rep = models.ForeignKey(Rep)
     recorded_date = models.DateField(default=date.today)
-    places = models.TextField(blank=True)
+    time_slot = models.PositiveIntegerField(
+        choices=TIME_SLOTS, null=True, blank=True)
+    activity = models.CharField(max_length=200, blank=True)
+    #places = models.TextField(blank=True)
 
     class Meta:
         verbose_name_plural = 'Itinerary'
+        ordering = ['recorded_date', 'time_slot']
 
     def __unicode__(self):
-        return self.places
+        return self.activity
+
+    @property
+    def can_change(self):
+        if self.recorded_date > date.today():
+            return True
+        return False
 
 
 class Summary(models.Model):

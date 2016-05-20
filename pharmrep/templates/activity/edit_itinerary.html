@@ -1,0 +1,76 @@
+{% extends 'activity/call.html' %}
+{% block pageheader %}
+<h3 >Edit Itinerary<i class="fa fa-angle-double-right "></i></h3>
+{% endblock pageheader %}
+
+{% block content %}
+<div class="col-md-6">
+    <form method='post' role='form' class='form-horizontal' action=''>{% csrf_token %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="form-group">
+                          <label class="col-sm-4 control-label">Rep</label>
+                          <div class="col-sm-8">
+                              <input type="text" class="readonly" value="{{ itinerary.rep }}" readonly />
+                          </div>
+                    </div>
+                    <div class="form-group">
+                          <label class="col-sm-4 control-label">Date</label>
+                          <div class="col-sm-8">
+                              <input type="text" class="readonly" value="{{ itinerary.recorded_date }}" readonly />
+                          </div>
+                    </div>
+                    <div class="form-group">
+                          <label class="col-sm-4 control-label">Time Slot</label>
+                          <div class="col-sm-8">
+                              <input type="text" class="readonly" value="{{ itinerary.get_time_slot_display }}" readonly />
+                          </div>
+                    </div>
+
+                      <div class="form-group">
+                          {% if form.activity.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.activity.errors }}
+                            </div>
+                          {% endif %}
+                          <label for="{{ form.activity.id_for_label }}" class="col-sm-4 control-label">Activity</label>
+                          <div class="col-sm-8">
+                          {{ form.activity }}
+                      </div>
+
+                        <div class="col-md-4"></div>
+                        <div class="col-md-8">
+                        <input type="submit" value="Save" class="btn btn-primary btn-lg" />
+    </form>
+</div>
+{% endblock content %}
+
+{% block submenu-js %}
+<script type="text/javascript">
+$('.list-group-item').removeClass('active');
+$('#itinerary-submenu').addClass('active');
+$('.input > input').addClass('form-control');
+$('select').eq(0).val(0);
+$('select').eq(1).val(1);
+$('select').eq(2).val(2);
+$('select').eq(3).val(3);
+$('select').eq(4).val(4);
+$('select').eq(5).val(5);
+$('select').eq(6).val(6);
+$('select').eq(7).val(7);
+$('select').eq(8).val(8);
+$('select').eq(9).val(9);
+$('#id_places').attr('class','form-control');
+$('#id_recorded_date').attr('class','form-control');
+//Datepicker
+$('#id_date').datepicker({'format': 'yyyy-mm-dd'})
+    .on('changeDate', function(e) {
+        $(this).datepicker('hide');
+    });
+</script>
+{% endblock submenu-js %}
